@@ -778,6 +778,26 @@
             </div>
         </footer>
     </div>
+
+    <div id="chat-pull-tab"
+        class="hidden fixed bottom-0 right-4 md:right-8 bg-primary text-black px-4 py-2.5 rounded-t-xl shadow-[0_-4px_10px_rgba(0,0,0,0.1)] cursor-pointer z-[100] hover:pt-4 transition-all flex items-center gap-2 border border-black/5"
+        onclick="openChatTab()">
+        <span class="material-symbols-outlined text-lg animate-pulse" style="animation-duration: 2s;">forum</span>
+        <span class="font-bold text-sm">Consultation Chat</span>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('chat_collapsed') === 'true') {
+                document.getElementById('chat-pull-tab').classList.remove('hidden');
+            }
+        });
+
+        function openChatTab() {
+            localStorage.removeItem('chat_collapsed');
+            window.location.href = 'NexusConfigurator-3mss.html';
+        }
+    </script>
 </body>
 
 </html>
