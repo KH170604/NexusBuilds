@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Budget &amp; Tier Selection | NexusBuilds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fac638",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#141414",
+                        "text-main": "#181811",
+                        "text-sub": "#8c8b5f"
+                    },
+                    fontFamily: {
+                        display: "Spline Sans"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes float-1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(30px, -20px);
+            }
+        }
+
+        @keyframes float-2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-20px, 30px);
+            }
+        }
+
+        @keyframes float-3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(25px, 25px);
+            }
+        }
+
+        @keyframes float-4 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-30px, -15px);
+            }
+        }
+
+        .animate-drift-1 {
+            animation: float-1 18s ease-in-out infinite;
+        }
+
+        .animate-drift-2 {
+            animation: float-2 23s ease-in-out infinite;
+        }
+
+        .animate-drift-3 {
+            animation: float-3 20s ease-in-out infinite;
+        }
+
+        .animate-drift-4 {
+            animation: float-4 25s ease-in-out infinite;
+        }
+
+        .dust-wrapper {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+        }
+
+        .dust-spec {
+            background-color: currentColor;
+            border-radius: 50%;
+            opacity: 0.4;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+        }
+
+        .dark .dust-spec {
+            opacity: 0.2;
+        }
+
+        .dust-wrapper:hover .dust-spec {
+            transform: translate(var(--avoid-x, 40px), var(--avoid-y, -40px)) scale(0.5);
+            opacity: 0.6;
+        }
+
+        .service-card.selected {
+            border-color: #fac638;
+            background-color: rgba(250, 198, 56, 0.05);
+        }
+
+        .service-card.selected .tier-bg {
+            opacity: 0.25;
+        }
+
+        .grayscale-section {
+            filter: grayscale(100%);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased overflow-hidden h-screen w-full relative transition-colors duration-300">
+    <div
+        class="absolute inset-0 w-full h-full overflow-hidden z-0 text-gray-400 dark:text-gray-600 pointer-events-none">
+        <div class="dust-wrapper top-[10%] left-[10%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 50px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[25%] left-[80%] animate-drift-2 w-16 h-16"
+            style="--avoid-x: -40px; --avoid-y: 40px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+        <div class="dust-wrapper top-[70%] left-[15%] animate-drift-3 w-10 h-10"
+            style="--avoid-x: 30px; --avoid-y: -50px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[45%] left-[45%] animate-drift-4 w-14 h-14"
+            style="--avoid-x: -60px; --avoid-y: -20px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[85%] left-[70%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 20px; --avoid-y: 60px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[15%] left-[50%] animate-drift-3 w-12 h-12"
+            style="--avoid-x: -30px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[60%] left-[90%] animate-drift-2 w-16 h-16"
+            style="--avoid-x: -50px; --avoid-y: 20px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+        <div class="dust-wrapper top-[5%] left-[30%] animate-drift-4 w-10 h-10"
+            style="--avoid-x: 40px; --avoid-y: 40px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[35%] left-[5%] animate-drift-1 w-14 h-14"
+            style="--avoid-x: 50px; --avoid-y: 10px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[90%] left-[30%] animate-drift-2 w-12 h-12"
+            style="--avoid-x: -20px; --avoid-y: -50px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[55%] left-[65%] animate-drift-3 w-12 h-12"
+            style="--avoid-x: 35px; --avoid-y: -35px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[80%] left-[50%] animate-drift-4 w-16 h-16"
+            style="--avoid-x: -40px; --avoid-y: -40px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+    </div>
+    <header class="absolute top-0 left-0 w-full p-6 z-50">
+        <div class="flex items-center justify-between w-full">
+            <a href="index.html"
+                class="flex items-center gap-2 text-text-main dark:text-white hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-3xl">memory</span>
+                <h2 class="text-xl font-bold tracking-tight">NexusBuilds</h2>
+            </a>
+            <button aria-label="Toggle Theme"
+                class="p-2 rounded-full text-text-main dark:text-white hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+                onclick="toggleTheme(this)">
+                <span class="material-symbols-outlined">light_mode</span>
+            </button>
+        </div>
+    </header>
+    <main
+        class="relative z-10 flex flex-col items-center justify-center h-full w-full px-4 text-center overflow-y-auto pt-40 pb-20">
+        <div class="max-w-5xl w-full flex flex-col items-center gap-10">
+            <div class="w-full flex flex-col items-center gap-6">
+                <h1 class="mt-24 text-3xl md:text-5xl font-black tracking-tight text-text-main dark:text-white">
+                    Give us your budget range
+                </h1>
+                <div
+                    class="flex flex-col sm:flex-row gap-4 w-full max-w-lg justify-center mt-2 p-6 rounded-2xl bg-gray-200 dark:bg-white/10">
+                    <div class="relative w-full transition-all duration-300" id="min-budget-wrapper">
+                        <label class="sr-only" for="min-budget">Minimum payment amount</label>
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        <input
+                            class="block w-full pl-7 pr-12 py-3 sm:text-sm border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-white/5 text-text-main dark:text-white placeholder-gray-400 focus:ring-primary focus:border-primary transition-colors"
+                            id="min-budget" name="min-budget" placeholder="Min amount" type="number" />
+                    </div>
+                    <div class="relative w-full">
+                        <label class="sr-only" for="max-budget">Maximum payment amount</label>
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 sm:text-sm">$</span>
+                        </div>
+                        <input
+                            class="block w-full pl-7 pr-12 py-3 sm:text-sm border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-white/5 text-text-main dark:text-white placeholder-gray-400 focus:ring-primary focus:border-primary transition-colors"
+                            id="max-budget" name="max-budget" placeholder="Max amount" type="number" />
+                    </div>
+                </div>
+                <div class="w-full max-w-lg h-px bg-gray-300 dark:bg-gray-700"></div>
+            </div>
+            <div class="w-full flex flex-col items-center gap-8 mt-4">
+                <div
+                    class="max-w-2xl text-text-sub dark:text-gray-400 text-lg leading-relaxed flex flex-col items-center gap-2">
+                    <p>We have three service tiers depending on build complexity. This fee will not be charged over top
+                        your budget, it will be incorporated within it.</p>
+                    <h3 class="text-xl font-bold text-text-main dark:text-white mt-4">Please select which tier you are
+                        most interested in.</h3>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full transition-all duration-300"
+                    id="tier-selection-container">
+                    <button
+                        class="service-card group relative flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 hover:border-primary dark:hover:border-primary transition-all duration-300 text-left h-full overflow-hidden"
+                        data-tier-min="700" onclick="selectTier(this)">
+                        <div class="tier-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-40 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-GBfeM5FauP0M3D9zgQwqWjloLBXzcwukxKE3vmaU9q7pR6NFc2H9U1WXqUzLP81Iu4fX_57Hxs7wrVjKMz3Cl3r31ZXHnG2ZngNTI7CPVXIVUFECTJMS05B5pyBsCGyW19qW3KuS0Kk_Pos0MOoDe7MQdhvp872uTCkJ9jVkLDsxY7CwxrgbxjYyBS_N8b3ib60NR7RFdnoROFvINCHZ-Zf70L5vlGvDOe0i2tFQizvJPMLWsM8dn5nyxgfzMQRXI99xaXKFKKCD');">
+                        </div>
+                        <div class="relative z-10 flex flex-col items-center w-full">
+                            <span
+                                class="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-3">Minimum
+                                $700</span>
+                            <span
+                                class="p-3 mb-4 rounded-full bg-gray-100 dark:bg-white/5 text-text-main dark:text-white group-hover:bg-primary group-hover:text-black transition-colors duration-300">
+                                <span class="material-symbols-outlined text-2xl">hardware</span>
+                            </span>
+                            <h3 class="text-xl font-bold text-text-main dark:text-white mb-1">Standard</h3>
+                            <p class="text-sm font-medium text-text-sub dark:text-gray-400">$175 service fee</p>
+                        </div>
+                    </button>
+                    <button
+                        class="service-card group relative flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 hover:border-primary dark:hover:border-primary transition-all duration-300 text-left h-full overflow-hidden"
+                        data-tier-min="1400" onclick="selectTier(this)">
+                        <div class="tier-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-40 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCLblb7dNYJKXUs8m7S677h2DfKmh-SM7OvDHKT2Re1s_-oS7PXrCidTrciaaozoGaSOKyDrH4PmCyrlvTfJOF8UAtDtmhyXzn0qKGEvFbiEl58ZUS-eHR9mJwDMI0uEtJEX21vmoIayTklUi2HZxjKoRzyPENta6NTkDuUTMx2CLD0_ygsZkzeTRvNndUdi-5H-89AMlgjCkOUoigiyl27SaVrk6JKGXLLSn4P-ygO2slA-BxctaKB991Or-nxsLkZNYg1Iote9Gmy');">
+                        </div>
+                        <div class="relative z-10 flex flex-col items-center w-full">
+                            <span
+                                class="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-3">Minimum
+                                $1400</span>
+                            <span
+                                class="p-3 mb-4 rounded-full bg-gray-100 dark:bg-white/5 text-text-main dark:text-white group-hover:bg-primary group-hover:text-black transition-colors duration-300">
+                                <span class="material-symbols-outlined text-2xl">precision_manufacturing</span>
+                            </span>
+                            <h3 class="text-xl font-bold text-text-main dark:text-white mb-1">Advanced</h3>
+                            <p class="text-sm font-medium text-text-sub dark:text-gray-400">$275 service fee</p>
+                        </div>
+                    </button>
+                    <button
+                        class="service-card group relative flex flex-col items-center justify-center p-6 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-gray-100 dark:bg-gray-900 hover:border-primary dark:hover:border-primary transition-all duration-300 text-left h-full overflow-hidden"
+                        data-tier-min="2500" onclick="selectTier(this)">
+                        <div class="tier-bg absolute inset-0 w-full h-full bg-cover bg-center opacity-40 group-hover:opacity-50 transition-opacity duration-300 pointer-events-none"
+                            style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC1ETwpzztKvd9hXTTssL2vGbutzYyMdvXYTdlWErlW0aQnVR3aLvlUvKnJqRRPws04Wn57X6qumG-OIZNuQ5nEkJ5kozlhJXzaIkebBFtTkBeGddFiNNslOTrTY9nwSQe1wKZ1O0wsdLXOe_HGg-r5ZqM1QtTL4U9g74LVBX16m707psdn0gaNv6xFDCNBHHZdmf0ae0Qc5gczHrW8hNvY3gGm1eHW5_KPf-P_OmuvdGggPq5y_ZoYElRC47zB-X_onLBlC8KBoHTP');">
+                        </div>
+                        <div class="relative z-10 flex flex-col items-center w-full">
+                            <span
+                                class="text-xs font-bold text-gray-600 dark:text-gray-400 uppercase tracking-wider mb-3">Minimum
+                                $2500</span>
+                            <span
+                                class="p-3 mb-4 rounded-full bg-gray-100 dark:bg-white/5 text-text-main dark:text-white group-hover:bg-primary group-hover:text-black transition-colors duration-300">
+                                <span class="material-symbols-outlined text-2xl">rocket_launch</span>
+                            </span>
+                            <h3 class="text-xl font-bold text-text-main dark:text-white mb-1">Ultra</h3>
+                            <p class="text-sm font-medium text-text-sub dark:text-gray-400">$500+ service fee</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-full gap-8 mt-8">
+                <div class="flex justify-between w-full md:px-12">
+                    <button onclick="window.location.href='NexusConfigurator-2.html'"
+                        class="px-8 py-3 rounded-lg border border-gray-300 dark:border-gray-700 text-text-main dark:text-white font-semibold hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
+                        Previous
+                    </button>
+                    <button onclick="navigateNext()"
+                        class="px-8 py-3 rounded-lg bg-gray-200 dark:bg-gray-800 text-gray-400 cursor-not-allowed font-semibold transition-colors"
+                        disabled="" id="next-btn">
+                        Next
+                    </button>
+                </div>
+                <button
+                    class="mt-4 text-xs sm:text-sm bg-primary text-black font-semibold py-2 px-6 rounded-full hover:bg-yellow-400 transition-all shadow-md"
+                    id="expert-btn" onclick="toggleExpertMode()" type="button">
+                    I'm not sure about my budget or tier, I'd rather speak to an expert
+                </button>
+                <div
+                    class="w-full text-center px-2 text-sm text-text-sub dark:text-gray-400 max-w-4xl space-y-1 mx-auto mt-2">
+                    <p><span class="font-bold text-text-main dark:text-white">Standard:</span> office setups, gaming
+                        setups, digital creative work</p>
+                    <p><span class="font-bold text-text-main dark:text-white">Advanced:</span> liquid cooled setups,
+                        competitive gaming setups, content creation workspaces</p>
+                    <p><span class="font-bold text-text-main dark:text-white">Ultra:</span> fully custom-built setups,
+                        high-traffic servers, extreme builds</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        let selectedTierMin = 0;
+        let isExpertMode = false;
+
+        function navigateNext() {
+            if (isExpertMode) {
+                window.location.href = 'NexusConfigurator-3c.html';
+            } else {
+                window.location.href = 'NexusConfigurator-4a.html';
+            }
+        }
+
+        function selectTier(element) {
+            // If expert mode is on, clicking tiers might be disabled or should turn off expert mode. 
+            // The requirement says buttons are lowered opacity/grayscale, implied disabled.
+            if (isExpertMode) return;
+            // Remove selected class from all cards
+            document.querySelectorAll('.service-card').forEach(card => {
+                card.classList.remove('selected', 'ring-2', 'ring-primary', 'dark:ring-primary');
+            });
+            // Add selected class to clicked card
+            element.classList.add('selected', 'ring-2', 'ring-primary', 'dark:ring-primary');
+            // Get the minimum budget from the selected tier
+            selectedTierMin = parseInt(element.getAttribute('data-tier-min'));
+            validateForm();
+        }
+        function toggleExpertMode() {
+            isExpertMode = !isExpertMode;
+            const minBudgetWrapper = document.getElementById('min-budget-wrapper');
+            const tierContainer = document.getElementById('tier-selection-container');
+            const expertBtn = document.getElementById('expert-btn');
+            if (isExpertMode) {
+                // Clear selections
+                selectedTierMin = 0;
+                document.querySelectorAll('.service-card').forEach(card => {
+                    card.classList.remove('selected', 'ring-2', 'ring-primary', 'dark:ring-primary');
+                });
+                // Hide min budget
+                minBudgetWrapper.classList.add('hidden');
+                // Grayscale tiers
+                tierContainer.classList.add('grayscale-section');
+                // Update button text style slightly to indicate active state (optional but good UI)
+                expertBtn.textContent = "Cancel expert consultation request";
+            } else {
+                // Show min budget
+                minBudgetWrapper.classList.remove('hidden');
+                // Restore tiers
+                tierContainer.classList.remove('grayscale-section');
+                // Revert button text
+                expertBtn.textContent = "I'm not sure about my budget or tier, I'd rather speak to an expert";
+            }
+            validateForm();
+        }
+        function validateForm() {
+            const minBudgetVal = document.getElementById('min-budget').value;
+            const maxBudgetVal = document.getElementById('max-budget').value;
+            const nextBtn = document.getElementById('next-btn');
+            const minBudget = parseInt(minBudgetVal);
+            let isValid = false;
+            if (isExpertMode) {
+                // Expert mode: only max budget required
+                if (maxBudgetVal) {
+                    isValid = true;
+                }
+            } else {
+                // Normal mode: check if min & max are filled, a tier is selected, AND min budget meets tier requirement
+                if (minBudgetVal && maxBudgetVal && selectedTierMin > 0 && minBudget >= selectedTierMin) {
+                    isValid = true;
+                }
+            }
+            if (isValid) {
+                nextBtn.disabled = false;
+                nextBtn.classList.remove('bg-gray-200', 'dark:bg-gray-800', 'text-gray-400', 'cursor-not-allowed');
+                nextBtn.classList.add('bg-primary', 'text-black', 'hover:bg-yellow-400', 'cursor-pointer');
+            } else {
+                nextBtn.disabled = true;
+                nextBtn.classList.add('bg-gray-200', 'dark:bg-gray-800', 'text-gray-400', 'cursor-not-allowed');
+                nextBtn.classList.remove('bg-primary', 'text-black', 'hover:bg-yellow-400', 'cursor-pointer');
+            }
+        }
+        document.getElementById('min-budget').addEventListener('input', validateForm);
+        document.getElementById('max-budget').addEventListener('input', validateForm);
+    </script>
+
+</body>
+
+</html>

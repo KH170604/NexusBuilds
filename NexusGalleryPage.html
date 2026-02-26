@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>NexusBuilds Masterpiece Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fac638",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#141414",
+                        "text-main": "#181811",
+                        "text-sub": "#8c8b5f"
+                    },
+                    fontFamily: {
+                        display: "Spline Sans"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes gradient-pan {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-gradient-bg {
+            background-size: 200% 200%;
+            animation: gradient-pan 6s ease infinite;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased overflow-x-hidden">
+    <div class="relative flex flex-col min-h-screen w-full">
+        <header
+            class="sticky top-0 z-50 px-4 py-4 w-full flex justify-center bg-gray-100 dark:bg-[#1e2022] border-b border-[#e6e6db] dark:border-[#3a391a]">
+            <div class="flex items-center justify-between w-full max-w-[1440px]">
+                <div class="flex items-center">
+                    <a href="index.html"
+                        class="flex items-center gap-2 text-text-main dark:text-white hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl">memory</span>
+                        <h2 class="text-xl font-bold tracking-tight">NexusBuilds</h2>
+                    </a>
+                    <div class="hidden md:block h-5 w-px bg-gray-400 dark:bg-gray-600 mx-5"></div>
+                    <nav class="hidden md:flex items-center gap-6">
+                        <a class="text-text-main dark:text-white text-sm font-medium hover:text-primary transition-colors"
+                            href="#">Services</a>
+                        <a class="text-text-main dark:text-white text-sm font-medium hover:text-primary transition-colors"
+                            href="#">About Us</a>
+                        <a class="text-text-main dark:text-white text-sm font-medium hover:text-primary transition-colors"
+                            href="#">Support</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button aria-label="Toggle Theme"
+                        class="p-2 rounded-full text-text-main dark:text-white hover:bg-gray-300 dark:hover:bg-white/10 transition-colors translate-y-[4px]"
+                        onclick="toggleTheme(this)">
+                        <span class="material-symbols-outlined">light_mode</span>
+                    </button>
+                    <button class="md:hidden p-2 text-text-main dark:text-white">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <a href="NexusConfigurator.html"
+                        class="hidden md:flex items-center justify-center rounded-full h-10 px-6 bg-primary text-text-main text-sm font-bold hover:brightness-110 transition-all">
+                        <span class="truncate">Start Your Build</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <section class="w-full px-4 pt-12 pb-8 md:pt-20 md:pb-12 bg-background-light dark:bg-background-dark">
+            <div
+                class="max-w-[1440px] mx-auto flex flex-col items-start md:items-center text-left md:text-center gap-6">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-stone-200 dark:bg-white/10 border border-stone-300 dark:border-white/20 shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    <span class="text-xs font-semibold uppercase tracking-wider text-text-main dark:text-white">Curated
+                        Collection</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-black tracking-tight text-text-main dark:text-white">
+                    Nexus Gallery
+                </h1>
+                <p class="text-xl text-text-sub dark:text-gray-400 max-w-2xl leading-relaxed">
+                    Explore our finest custom-built machines. From silent office workstations to extreme water-cooled
+                    gaming rigs, every build is a unique fusion of performance and art.
+                </p>
+            </div>
+        </section>
+        <section class="w-full px-4 pb-24">
+            <div class="max-w-[1440px] mx-auto mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+                <p class="text-text-sub dark:text-gray-400 text-sm font-medium self-start sm:self-center">
+                    Showing <span class="font-bold text-text-main dark:text-white">10</span> builds
+                </p>
+                <div class="relative w-full sm:w-auto">
+                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-text-sub">
+                        <span class="material-symbols-outlined text-lg">filter_list</span>
+                    </div>
+                    <select
+                        class="w-full sm:w-64 bg-white dark:bg-[#181a1b] border border-gray-200 dark:border-[#3a391a] text-text-main dark:text-white text-sm font-medium rounded-lg py-3 pl-10 pr-10 appearance-none focus:ring-2 focus:ring-primary focus:border-primary shadow-sm cursor-pointer hover:border-primary/50 transition-colors">
+                        <option value="all">Filter by Build Tier</option>
+                        <option value="standard">Standard Tier</option>
+                        <option value="advanced">Advanced Tier</option>
+                        <option value="ultra">Ultra Tier</option>
+                    </select>
+                    <div
+                        class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-text-main dark:text-white">
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+                    </div>
+                </div>
+            </div>
+            <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.unsplash.com/photo-1660855551570-dd44e0ab800c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Standard</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Stealth
+                            Bomber
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">RTX 3070, Ryzen 7 7600X, 32GB DDR5, MSI B650
+                            Gaming Plus Wifi, Fractal Meshify C</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-1092</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.pexels.com/photos/2399840/pexels-photo-2399840.jpeg');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-primary text-text-main text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Advanced</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Arctic Flow
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">RTX 2080Ti, i9-12900K, 128GB DDR4, ASUS ROG
+                            Rampage VI Extreme, Liquid Cooling</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-2241</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.pexels.com/photos/1038916/pexels-photo-1038916.jpeg');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Ultra</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Everest
+                            Battlestation
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">Dual RTX 3090 24GB, Ryzen 9 9900X3D, 96GB
+                            DDR5, Liquid Cooling, LG 38" OLED + 36" IPS Monitors, Keychron K10 Pro, Onkyo Speaker
+                            System, Audio-Technica ATH-M50X</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-9901</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.unsplash.com/photo-1742916588667-4a4e6a35c889?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-primary text-text-main text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Advanced</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">White Base
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">RTX 3080 10GB EFSF Edition, Ryzen 7 7900X3D,
+                            64GB DDR5, Gigabyte Aorus B650e Stealth Ice, Liquid Cooling</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-3320</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://plus.unsplash.com/premium_photo-1682145767950-d3c0e9e1b091?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Ultra</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">The
+                            Monolith Server
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">RTX 6000 Ada Generation, Threadripper Pro
+                            7995WX, 512GB DDR5 ECC, ASUS Pro WS WRX90E-SAGE SE, 104TB Storage</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-8812</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.pexels.com/photos/13260076/pexels-photo-13260076.jpeg');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Standard</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Jupiter
+                            Gaming Setup
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">RTX 3080Ti, Ryzen 7 7900X, 64GB DDR5, 24"
+                            180hz OLED Monitor, 24" 240hz IPS Monitor, Logitech MX Keyboard + Mouse</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-1550</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.pexels.com/photos/15109454/pexels-photo-15109454.jpeg');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-primary text-text-main text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Advanced</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">DER8AUER
+                            RAIN8EAU
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">RX 9070-XT, Ryzen 9 5900X, 64GB DDR4, ASUS
+                            Prime X570, Liquid Cooling</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-4420</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://plus.unsplash.com/premium_photo-1678564741870-d68a69925537?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-200 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Standard</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">MinStack
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">Ryzen 5 5600X, GTX 1660, 27" 1080p IPS
+                            Monitor, Edifier M60 Speakers, Logitech M280 Mouse, Corsair K70 Keyboard</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-1029</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.unsplash.com/photo-1573053986275-840ffc7cc685?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Ultra</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Quartet
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">Quadruple GTX 1080, Intel i9-10980XE, 128GB
+                            DDR4, Gigabyte X299 Designare-Ex, 360mm AIO</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-9950</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="group relative bg-black rounded-[1.5rem] overflow-hidden shadow-lg h-[500px] border border-[#f0f0f0] dark:border-[#3a391a]">
+                    <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                        style="background-image: url('https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                    </div>
+                    <div
+                        class="absolute inset-x-0 bottom-0 h-3/4 bg-gradient-to-t from-black via-black/50 to-transparent opacity-90">
+                    </div>
+                    <span
+                        class="absolute top-6 left-6 bg-primary text-text-main text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider shadow-md z-10">Advanced</span>
+                    <div class="absolute bottom-0 left-0 right-0 p-6">
+                        <h3 class="text-2xl font-bold text-white group-hover:text-primary transition-colors">Solstice
+                            ITX Setup
+                        </h3>
+                        <p class="text-gray-300 mt-1 text-sm font-medium">RTX 4070, Ryzen 7 7800X3D, 240mm AIO, Rode
+                            PSA1 Mic, 27" 180hz OLED Monitor, Logitech G Mouse, Corsair K70 Keyboard</p>
+                        <div class="mt-3 flex items-center justify-between">
+                            <span class="text-xs font-bold text-white/60 uppercase tracking-widest">ID: #NB-2299</span>
+                            <button
+                                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white group-hover:bg-primary group-hover:text-black transition-all">
+                                <span class="material-symbols-outlined text-lg">arrow_outward</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="py-16 md:py-24 w-full bg-text-main dark:bg-[#1a1a0c] overflow-hidden relative">
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-green-500/10 to-blue-500/10 animate-gradient-bg pointer-events-none z-0">
+            </div>
+            <div class="max-w-[1440px] mx-auto px-4 sm:px-8 relative z-10">
+                <div
+                    class="flex flex-col md:flex-row items-center justify-between gap-12 bg-white/5 dark:bg-black/20 backdrop-blur-md rounded-3xl p-8 md:p-12 border border-white/10 overflow-hidden relative group">
+                    <div
+                        class="absolute top-1/2 left-1/4 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] bg-primary/20 blur-[80px] rounded-full pointer-events-none">
+                    </div>
+                    <div class="w-full md:w-1/2 relative flex justify-center items-center">
+                        <div class="relative w-full max-w-sm aspect-square">
+                            <div class="absolute inset-0 bg-primary/30 blur-[60px] rounded-full animate-pulse"></div>
+                            <div
+                                class="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl border border-white/10 transform rotate-[-6deg] group-hover:rotate-0 transition-all duration-500">
+                                <div class="absolute inset-0 bg-cover bg-center"
+                                    style="background-image: url('https://images.pexels.com/photos/33384207/pexels-photo-33384207.jpeg');">
+                                </div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                            </div>
+                            <div
+                                class="absolute -bottom-4 -right-4 w-24 h-24 bg-gradient-to-br from-primary to-orange-400 rounded-full blur-[30px] opacity-60">
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="w-full md:w-1/2 flex flex-col items-center md:items-start text-center md:text-left gap-6">
+                        <h2 class="text-3xl md:text-5xl font-black text-white leading-tight">
+                            Like what you see? <br />
+                            <span class="text-primary relative inline-block">
+                                Create Your Own.
+                                <svg class="absolute -bottom-2 left-0 w-full h-3 text-primary opacity-50"
+                                    preserveAspectRatio="none" viewBox="0 0 200 9" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M2.00025 6.99604C79.8174 3.23506 137.962 -0.835923 198 2.00392" fill="none"
+                                        stroke="currentColor" stroke-width="3"></path>
+                                </svg>
+                            </span>
+                        </h2>
+                        <p class="text-gray-300 text-lg leading-relaxed max-w-lg">
+                            Dive into our interactive configuration tool. Customize every detail, from the chassis to
+                            the cooling loop, and bring your dream machine to life.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 mt-2 w-full md:w-auto">
+                            <a href="NexusConfigurator.html"
+                                class="h-14 px-10 rounded-full bg-primary text-text-main text-lg font-bold shadow-[0_0_20px_rgba(250,198,56,0.4)] hover:shadow-[0_0_30px_rgba(250,198,56,0.6)] hover:brightness-110 transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center">
+                                Start Configurator
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="bg-gray-100 dark:bg-[#1e2022] border-t border-[#e6e6db] dark:border-[#3a391a] py-12 px-4">
+            <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
+                    <div class="flex items-center gap-2 text-text-main dark:text-white">
+                        <span class="material-symbols-outlined text-2xl">memory</span>
+                        <h3 class="text-lg font-bold">NexusBuilds</h3>
+                    </div>
+                    <p class="text-sm text-text-sub dark:text-gray-400">
+                        Defining the future of personal computing with precision engineering and bespoke design.
+                    </p>
+                    <div class="flex gap-4 mt-2">
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">call</span></a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">mail</span></a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-text-main dark:text-white mb-4">Services</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-text-sub dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="#">Standard Builds</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Advanced Builds</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Ultra Builds</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Repairs &amp; Upgrades</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-text-main dark:text-white mb-4">Company</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-text-sub dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Gallery</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-text-main dark:text-white mb-4">Support</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-text-sub dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Warranty Info</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Shipping</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="max-w-[1440px] mx-auto mt-12 pt-8 border-t border-[#e6e6db] dark:border-[#3a391a] text-center md:text-left flex flex-col md:flex-row justify-between text-xs text-text-sub dark:text-gray-500">
+                <p>© 2024 NexusBuilds Inc. All rights reserved.</p>
+                <div class="flex gap-6 justify-center md:justify-end mt-4 md:mt-0">
+                    <a class="hover:text-primary" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

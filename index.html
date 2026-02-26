@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Custom PC Builder Homepage</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fac638",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#141414",
+                        "text-main": "#181811",
+                        "text-sub": "#8c8b5f"
+                    },
+                    fontFamily: {
+                        display: "Spline Sans"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @keyframes subtle-pan {
+            0% {
+                transform: scale(1.05);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+
+        .animate-subtle-bg {
+            animation: subtle-pan 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes move-dashes {
+            from {
+                background-position-x: 0px;
+            }
+
+            to {
+                background-position-x: 60px;
+            }
+        }
+
+        .animate-dotted-line {
+            background-color: transparent;
+            background-image: linear-gradient(90deg, #fac638 50%, transparent 50%);
+            background-size: 60px 8px;
+            background-position: 0 center;
+            background-repeat: repeat-x;
+            animation: move-dashes 1.5s linear infinite;
+        }
+
+        @keyframes gradient-pan {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .animate-gradient-bg {
+            background-size: 200% 200%;
+            animation: gradient-pan 6s ease infinite;
+        }
+
+        .btn-rgb-hover:hover {
+            background-image: linear-gradient(90deg, #fecaca, #bbf7d0, #bfdbfe);
+            background-size: 200% 200%;
+            animation: gradient-pan 2s linear infinite;
+        }
+
+        @keyframes float-1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(15px, -15px);
+            }
+        }
+
+        @keyframes float-2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-10px, -20px);
+            }
+        }
+
+        @keyframes float-3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(12px, 12px);
+            }
+        }
+
+        @keyframes float-4 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-15px, 5px);
+            }
+        }
+
+        .animate-float-1 {
+            animation: float-1 8s ease-in-out infinite;
+        }
+
+        .animate-float-2 {
+            animation: float-2 12s ease-in-out infinite;
+        }
+
+        .animate-float-3 {
+            animation: float-3 10s ease-in-out infinite;
+        }
+
+        .animate-float-4 {
+            animation: float-4 15s ease-in-out infinite;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased overflow-x-hidden">
+    <div class="relative flex flex-col min-h-screen w-full">
+        <header
+            class="sticky top-0 z-50 px-4 py-4 w-full flex justify-center bg-gray-100 dark:bg-[#1e2022] border-b border-[#e6e6db] dark:border-[#3a391a]">
+            <div class="flex items-center justify-between w-full max-w-[1440px]">
+                <div class="flex items-center">
+                    <a href="index.html"
+                        class="flex items-center gap-2 text-text-main dark:text-white hover:text-primary transition-colors">
+                        <span class="material-symbols-outlined text-3xl">memory</span>
+                        <h2 class="text-xl font-bold tracking-tight">NexusBuilds</h2>
+                    </a>
+                    <div class="hidden md:block h-5 w-px bg-gray-400 dark:bg-gray-600 mx-5"></div>
+                    <nav class="hidden md:flex items-center gap-6">
+                        <a class="text-text-main dark:text-white text-sm font-medium hover:text-primary transition-colors"
+                            href="#">Services</a>
+                        <a class="text-text-main dark:text-white text-sm font-medium hover:text-primary transition-colors"
+                            href="#">About Us</a>
+                        <a class="text-text-main dark:text-white text-sm font-medium hover:text-primary transition-colors"
+                            href="#">Support</a>
+                    </nav>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button aria-label="Toggle Theme"
+                        class="p-2 rounded-full text-text-main dark:text-white hover:bg-gray-300 dark:hover:bg-white/10 transition-colors translate-y-[4px]"
+                        onclick="toggleTheme(this)">
+                        <span class="material-symbols-outlined">light_mode</span>
+                    </button>
+                    <button class="md:hidden p-2 text-text-main dark:text-white">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <a href="NexusConfigurator.html"
+                        class="hidden md:flex items-center justify-center rounded-full h-10 px-6 bg-primary text-text-main text-sm font-bold hover:brightness-110 transition-all">
+                        <span class="truncate">Start Your Build</span>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <section class="w-full px-4 pt-6 pb-12 md:pt-10 md:pb-20">
+            <div
+                class="relative w-full max-w-[1440px] mx-auto rounded-[2rem] overflow-hidden shadow-2xl bg-background-dark isolate min-h-[600px] flex items-center">
+                <div class="absolute inset-0 w-full h-full z-0 overflow-hidden">
+                    <div class="absolute inset-0 bg-cover bg-center animate-subtle-bg"
+                        style="background-image: url('https://images.pexels.com/photos/33798620/pexels-photo-33798620.jpeg');">
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent"></div>
+                    <div class="absolute inset-0 bg-black/10 md:hidden"></div>
+                </div>
+                <div
+                    class="relative z-10 flex flex-col items-start gap-8 px-8 py-12 md:px-16 md:py-20 w-full md:w-2/3 lg:w-1/2">
+                    <div
+                        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-white">Next Gen Hardware
+                            Ready</span>
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-black leading-[1.1] tracking-tight text-white drop-shadow-lg">
+                        Precision <br />
+                        <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-primary">Engineering.</span>
+                    </h1>
+                    <p class="text-lg text-gray-200 max-w-lg leading-relaxed drop-shadow-md">
+                        Crafting bespoke workstations and gaming rigs tailored to your exact specifications. Experience
+                        the pinnacle of performance with a build designed just for you.
+                    </p>
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <a href="NexusConfigurator.html"
+                            class="h-14 px-8 rounded-full bg-primary text-text-main text-base font-bold shadow-[0_0_20px_rgba(249,245,6,0.3)] hover:shadow-[0_0_30px_rgba(249,245,6,0.5)] transition-shadow flex items-center">
+                            Get Started
+                        </a>
+                        <a href="NexusGalleryPage.html"
+                            class="h-14 px-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-base font-bold hover:bg-white/20 transition-colors flex items-center">
+                            View Gallery
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="w-full bg-stone-100 dark:bg-[#1e2022] pt-12 pb-0 px-4 relative">
+            <div
+                class="absolute top-0 left-0 w-full h-2 rounded-full overflow-hidden animate-dotted-line -translate-y-1/2 skew-x-[-60deg] z-10">
+            </div>
+            <div class="max-w-[1440px] mx-auto flex flex-col gap-12">
+                <div class="flex flex-col md:flex-row justify-between items-end gap-6">
+                    <div class="flex flex-col gap-4 max-w-2xl">
+                        <h2 class="text-5xl md:text-6xl font-black tracking-tight text-text-main dark:text-white">Why
+                            Choose Nexus</h2>
+                        <p class="text-text-sub dark:text-gray-400 text-lg">We build more than just computers; we craft
+                            high-performance machines tailored to your lifestyle.</p>
+                    </div>
+                    <a class="text-text-main dark:text-white font-bold underline decoration-primary decoration-2 underline-offset-4 hover:opacity-70 transition-opacity"
+                        href="NexusProcessPage.html">Learn about our process</a>
+                </div>
+                <div class="flex flex-col gap-6">
+                    <div
+                        class="group relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            style="background-image: url('https://images.pexels.com/photos/21854533/pexels-photo-21854533.jpeg');">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+                        <div class="absolute bottom-0 left-0 p-8 flex flex-col items-start gap-4">
+                            <div
+                                class="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center text-text-main shadow-lg">
+                                <span class="material-symbols-outlined text-5xl">tune</span>
+                            </div>
+                            <div>
+                                <h3 class="text-4xl font-bold text-white mb-2">Personalized Builds</h3>
+                                <p class="text-xl text-gray-300 max-w-2xl">Tailored to your exact needs and aesthetic
+                                    preferences, from color schemes to custom loop cooling. We source unique components
+                                    and can modify chassis to fit your specific vision, ensuring your setup is one of a
+                                    kind. We work with premium materials like tempered glass, brushed aluminum, and
+                                    exotic woods to create a chassis that matches your interior design.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            style="background-image: url('https://images.unsplash.com/photo-1669480380782-b055a193d066?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+                        <div class="absolute bottom-0 left-0 p-8 flex flex-col items-start gap-4">
+                            <div
+                                class="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center text-text-main shadow-lg">
+                                <span class="material-symbols-outlined text-5xl">visibility</span>
+                            </div>
+                            <div>
+                                <h3 class="text-4xl font-bold text-white mb-2">Full Transparency</h3>
+                                <p class="text-xl text-gray-300 max-w-2xl">Track your build at every stage with live
+                                    updates, photos, and direct communication with your builder. You'll never be left
+                                    wondering about the status of your machine, with detailed logs provided from
+                                    component arrival to final testing. You will receive a personalized dashboard login
+                                    where you can approve component substitutions if supply issues arise.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            style="background-image: url('https://images.unsplash.com/photo-1721332150382-d4114ee27eff?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+                        <div class="absolute bottom-0 left-0 p-8 flex flex-col items-start gap-4">
+                            <div
+                                class="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center text-text-main shadow-lg">
+                                <span class="material-symbols-outlined text-5xl">handyman</span>
+                            </div>
+                            <div>
+                                <h3 class="text-4xl font-bold text-white mb-2">Expert Assembly</h3>
+                                <p class="text-xl text-gray-300 max-w-2xl">Built by certified technicians ensuring
+                                    meticulous cable management and optimal airflow. Every screw is torqued to spec, and
+                                    thermal paste is applied with precision to guarantee peak thermal performance and
+                                    system longevity. We utilize industrial-grade tools and anti-static environments to
+                                    protect sensitive electronics during the build process.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="group relative h-[400px] md:h-[480px] w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg">
+                        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                            style="background-image: url('https://images.pexels.com/photos/10558599/pexels-photo-10558599.jpeg');">
+                        </div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10"></div>
+                        <div class="absolute bottom-0 left-0 p-8 flex flex-col items-start gap-4">
+                            <div
+                                class="w-20 h-20 rounded-full bg-primary/90 flex items-center justify-center text-text-main shadow-lg">
+                                <span class="material-symbols-outlined text-5xl">support_agent</span>
+                            </div>
+                            <div>
+                                <h3 class="text-4xl font-bold text-white mb-2">Top-tier Service</h3>
+                                <p class="text-xl text-gray-300 max-w-2xl">Lifetime support from a dedicated team of
+                                    hardware experts ready to assist you anytime. Whether you need troubleshooting
+                                    advice or are planning your next upgrade, our priority support channel ensures
+                                    you're always gaming or working without interruption. Our support extends beyond
+                                    just hardware; we offer remote optimization sessions to tune your OS and drivers for
+                                    your specific workflow.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col w-full mt-10 mb-10">
+                    <h3 class="text-5xl font-bold text-center text-text-main dark:text-white mb-16">Your Build Process
+                    </h3>
+                    <div class="relative w-full px-4">
+                        <div class="hidden md:block absolute top-6 left-0 w-full h-0.5 bg-gray-300 dark:bg-gray-700">
+                        </div>
+                        <div class="grid grid-cols-2 md:grid-cols-6 gap-y-20 md:gap-y-0 relative z-10">
+                            <div class="flex flex-col items-center gap-4 relative group">
+                                <input class="peer hidden" id="process-1" type="checkbox" />
+                                <label
+                                    class="cursor-pointer flex flex-col items-center gap-4 w-full peer-checked:[&amp;&gt;div]:bg-primary peer-checked:[&amp;&gt;div]:text-text-main"
+                                    for="process-1">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-stone-100 dark:bg-[#1c190d] border-2 border-primary dark:border-[#854d0e] text-[#854d0e] dark:text-primary flex items-center justify-center font-bold text-lg shadow-lg ring-4 ring-stone-100 dark:ring-[#1c190d] transition-colors duration-300 group-hover:bg-primary group-hover:text-text-main z-20">
+                                        1</div>
+                                    <p
+                                        class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">
+                                        Configure your<br />system</p>
+                                </label>
+                                <div
+                                    class="absolute top-[100%] left-1/2 -translate-x-1/2 w-48 p-4 bg-white dark:bg-[#181a1b] border border-primary/30 rounded-xl shadow-xl text-xs text-text-sub dark:text-gray-300 text-center opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0 transition-all duration-300 z-30 pointer-events-none">
+                                    Select your customized parts from our wide range of premium components.
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 relative group">
+                                <input class="peer hidden" id="process-2" type="checkbox" />
+                                <label
+                                    class="cursor-pointer flex flex-col items-center gap-4 w-full peer-checked:[&amp;&gt;div]:bg-primary peer-checked:[&amp;&gt;div]:text-text-main"
+                                    for="process-2">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-stone-100 dark:bg-[#1c190d] border-2 border-primary dark:border-[#854d0e] text-[#854d0e] dark:text-primary flex items-center justify-center font-bold text-lg shadow-lg ring-4 ring-stone-100 dark:ring-[#1c190d] transition-colors duration-300 group-hover:bg-primary group-hover:text-text-main z-20">
+                                        2</div>
+                                    <p
+                                        class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">
+                                        Review &amp;<br />consult</p>
+                                </label>
+                                <div
+                                    class="absolute top-[100%] left-1/2 -translate-x-1/2 w-48 p-4 bg-white dark:bg-[#181a1b] border border-primary/30 rounded-xl shadow-xl text-xs text-text-sub dark:text-gray-300 text-center opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0 transition-all duration-300 z-30 pointer-events-none">
+                                    Our experts analyze your build for compatibility and performance optimization.
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 relative group">
+                                <input class="peer hidden" id="process-3" type="checkbox" />
+                                <label
+                                    class="cursor-pointer flex flex-col items-center gap-4 w-full peer-checked:[&amp;&gt;div]:bg-primary peer-checked:[&amp;&gt;div]:text-text-main"
+                                    for="process-3">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-stone-100 dark:bg-[#1c190d] border-2 border-primary dark:border-[#854d0e] text-[#854d0e] dark:text-primary flex items-center justify-center font-bold text-lg shadow-lg ring-4 ring-stone-100 dark:ring-[#1c190d] transition-colors duration-300 group-hover:bg-primary group-hover:text-text-main z-20">
+                                        3</div>
+                                    <p
+                                        class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">
+                                        Receive your<br />quotation</p>
+                                </label>
+                                <div
+                                    class="absolute top-[100%] left-1/2 -translate-x-1/2 w-48 p-4 bg-white dark:bg-[#181a1b] border border-primary/30 rounded-xl shadow-xl text-xs text-text-sub dark:text-gray-300 text-center opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0 transition-all duration-300 z-30 pointer-events-none">
+                                    Get a transparent, itemized quote including all parts and build services.
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 relative group">
+                                <input class="peer hidden" id="process-4" type="checkbox" />
+                                <label
+                                    class="cursor-pointer flex flex-col items-center gap-4 w-full peer-checked:[&amp;&gt;div]:bg-primary peer-checked:[&amp;&gt;div]:text-text-main"
+                                    for="process-4">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-stone-100 dark:bg-[#1c190d] border-2 border-primary dark:border-[#854d0e] text-[#854d0e] dark:text-primary flex items-center justify-center font-bold text-lg shadow-lg ring-4 ring-stone-100 dark:ring-[#1c190d] transition-colors duration-300 group-hover:bg-primary group-hover:text-text-main z-20">
+                                        4</div>
+                                    <p
+                                        class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">
+                                        Approve &amp;<br />place order</p>
+                                </label>
+                                <div
+                                    class="absolute top-[100%] left-1/2 -translate-x-1/2 w-48 p-4 bg-white dark:bg-[#181a1b] border border-primary/30 rounded-xl shadow-xl text-xs text-text-sub dark:text-gray-300 text-center opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0 transition-all duration-300 z-30 pointer-events-none">
+                                    Confirm your configuration to secure your hardware allocation and slot.
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 relative group">
+                                <input class="peer hidden" id="process-5" type="checkbox" />
+                                <label
+                                    class="cursor-pointer flex flex-col items-center gap-4 w-full peer-checked:[&amp;&gt;div]:bg-primary peer-checked:[&amp;&gt;div]:text-text-main"
+                                    for="process-5">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-stone-100 dark:bg-[#1c190d] border-2 border-primary dark:border-[#854d0e] text-[#854d0e] dark:text-primary flex items-center justify-center font-bold text-lg shadow-lg ring-4 ring-stone-100 dark:ring-[#1c190d] transition-colors duration-300 group-hover:bg-primary group-hover:text-text-main z-20">
+                                        5</div>
+                                    <p
+                                        class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">
+                                        Product<br />assembly</p>
+                                </label>
+                                <div
+                                    class="absolute top-[100%] left-1/2 -translate-x-1/2 w-48 p-4 bg-white dark:bg-[#181a1b] border border-primary/30 rounded-xl shadow-xl text-xs text-text-sub dark:text-gray-300 text-center opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0 transition-all duration-300 z-30 pointer-events-none">
+                                    Professional assembly with meticulous cable management and cooling setup.
+                                </div>
+                            </div>
+                            <div class="flex flex-col items-center gap-4 relative group">
+                                <input class="peer hidden" id="process-6" type="checkbox" />
+                                <label
+                                    class="cursor-pointer flex flex-col items-center gap-4 w-full peer-checked:[&amp;&gt;div]:bg-primary peer-checked:[&amp;&gt;div]:text-text-main"
+                                    for="process-6">
+                                    <div
+                                        class="w-12 h-12 rounded-full bg-stone-100 dark:bg-[#1c190d] border-2 border-primary dark:border-[#854d0e] text-[#854d0e] dark:text-primary flex items-center justify-center font-bold text-lg shadow-lg ring-4 ring-stone-100 dark:ring-[#1c190d] transition-colors duration-300 group-hover:bg-primary group-hover:text-text-main z-20">
+                                        6</div>
+                                    <p
+                                        class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">
+                                        Delivery &amp;<br />testing</p>
+                                </label>
+                                <div
+                                    class="absolute top-[100%] left-1/2 -translate-x-1/2 w-48 p-4 bg-white dark:bg-[#181a1b] border border-primary/30 rounded-xl shadow-xl text-xs text-text-sub dark:text-gray-300 text-center opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 peer-checked:opacity-100 peer-checked:visible peer-checked:translate-y-0 transition-all duration-300 z-30 pointer-events-none">
+                                    48-hour stress testing followed by secure packaging and insured shipping.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex justify-center mt-12">
+                        <a href="NexusProcessPage.html"
+                            class="h-12 px-8 rounded-full border border-text-main dark:border-white text-text-main dark:text-white text-sm font-bold hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-colors flex items-center">
+                            Learn more about our process
+                        </a>
+                    </div>
+                </div>
+                <div class="w-full h-2 rounded-full overflow-hidden animate-dotted-line mt-8 skew-x-[-60deg]"></div>
+            </div>
+        </section>
+        <section class="pt-8 pb-20 px-4 overflow-hidden w-full">
+            <div class="max-w-[1440px] mx-auto flex flex-col gap-3">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-5xl md:text-6xl font-black tracking-tight text-text-main dark:text-white">Recent
+                        Builds</h2>
+                    <div class="hidden md:flex gap-2">
+                        <button
+                            class="w-10 h-10 rounded-full border border-[#e6e6db] dark:border-[#4a492a] flex items-center justify-center hover:bg-primary hover:border-primary transition-colors text-text-main dark:text-white hover:text-text-main"
+                            onmousedown="this.interval = setInterval(() =&gt; document.getElementById('recent-masterpieces-carousel').scrollBy({left: -20, behavior: 'auto'}), 10)"
+                            onmouseleave="clearInterval(this.interval)" onmouseup="clearInterval(this.interval)">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <button
+                            class="w-10 h-10 rounded-full border border-[#e6e6db] dark:border-[#4a492a] flex items-center justify-center hover:bg-primary hover:border-primary transition-colors text-text-main dark:text-white hover:text-text-main"
+                            onmousedown="this.interval = setInterval(() =&gt; document.getElementById('recent-masterpieces-carousel').scrollBy({left: 20, behavior: 'auto'}), 10)"
+                            onmouseleave="clearInterval(this.interval)" onmouseup="clearInterval(this.interval)">
+                            <span class="material-symbols-outlined">arrow_forward</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="flex overflow-x-auto hide-scrollbar gap-6 pb-2 snap-x snap-mandatory px-2 outline-none mt-[10px]"
+                    id="recent-masterpieces-carousel"
+                    onkeydown="if(event.key==='ArrowLeft') this.scrollBy({left:-20,behavior:'auto'});if(event.key==='ArrowRight') this.scrollBy({left:20,behavior:'auto'});"
+                    tabindex="0">
+                    <a class="block min-w-[340px] md:min-w-[500px] snap-center rounded-[1.9rem] bg-white dark:bg-[#181a1b] overflow-hidden shadow-[0_10px_30px_-2px_rgba(0,0,0,0.1)] hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.2)] transition-all border border-[#f0f0f0] dark:border-[#3a391a] transform hover:-translate-y-1"
+                        href="#" id="build-standard">
+                        <div class="relative h-[320px] w-full bg-cover bg-center"
+                            data-alt="High end white gaming PC with water cooling"
+                            style="background-image: url('https://images.pexels.com/photos/13260076/pexels-photo-13260076.jpeg');">
+                            <span
+                                class="absolute top-4 left-4 bg-gray-200 text-gray-800 text-text-main text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md z-10">Standard</span>
+                        </div>
+                        <div class="p-8 flex flex-col gap-4">
+                            <div>
+                                <h3 class="text-3xl font-bold text-text-main dark:text-white">Jupiter Gaming Setup</h3>
+                                <p class="text-xl text-text-sub dark:text-gray-400 mt-2">RTX 3080Ti, Ryzen 7 7900X, 64GB
+                                    DDR5, 24" 180hz OLED Monitor, 24" 240hz IPS Monitor, Logitech MX Keyboard + Mouse
+                                </p>
+                            </div>
+                            <div class="text-primary font-bold text-sm mt-2 flex items-center gap-1">
+                                View Build Details <span
+                                    class="material-symbols-outlined text-base">arrow_forward</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="block min-w-[340px] md:min-w-[500px] snap-center rounded-[1.9rem] bg-white dark:bg-[#181a1b] overflow-hidden shadow-[0_10px_30px_-2px_rgba(0,0,0,0.1)] hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.2)] transition-all border border-[#f0f0f0] dark:border-[#3a391a] transform hover:-translate-y-1"
+                        href="#" id="build-advanced">
+                        <div class="relative h-[320px] w-full bg-cover bg-center"
+                            data-alt="Minimalist desk setup with compact PC case"
+                            style="background-image: url('https://images.unsplash.com/photo-1742916588667-4a4e6a35c889?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                            <span
+                                class="absolute top-4 left-4 bg-primary text-text-main text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md z-10">Advanced</span>
+                        </div>
+                        <div class="p-8 flex flex-col gap-4">
+                            <div>
+                                <h3 class="text-3xl font-bold text-text-main dark:text-white">White Base</h3>
+                                <p class="text-xl text-text-sub dark:text-gray-400 mt-2">RTX 3080 10GB EFSF Edition,
+                                    Ryzen 7 7900X3D, 64GB DDR5, Gigabyte Aorus B650e Stealth Ice, Liquid Cooling
+                                    Creator Pro</p>
+                            </div>
+                            <div class="text-primary font-bold text-sm mt-2 flex items-center gap-1">
+                                View Build Details <span
+                                    class="material-symbols-outlined text-base">arrow_forward</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="block min-w-[340px] md:min-w-[500px] snap-center rounded-[1.9rem] bg-white dark:bg-[#181a1b] overflow-hidden shadow-[0_10px_30px_-2px_rgba(0,0,0,0.1)] hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.2)] transition-all border border-[#f0f0f0] dark:border-[#3a391a] transform hover:-translate-y-1"
+                        href="#" id="build-Ultra">
+                        <div class="relative h-[320px] w-full bg-cover bg-center"
+                            data-alt="Dark aesthetic gaming room with purple neon lights"
+                            style="background-image: url('https://images.pexels.com/photos/1038916/pexels-photo-1038916.jpeg');">
+                            <span
+                                class="absolute top-4 left-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md z-10">Ultra</span>
+                        </div>
+                        <div class="p-8 flex flex-col gap-4">
+                            <div>
+                                <h3 class="text-3xl font-bold text-text-main dark:text-white">Everest Battlestation</h3>
+                                <p class="text-xl text-text-sub dark:text-gray-400 mt-2">Dual RTX 3090 24GB, Ryzen 9
+                                    9900X3D, 96GB DDR5, Liquid Cooling, LG 38" OLED + 36" IPS Monitors, Keychron K10
+                                    Pro, Onkyo Speaker System, Audio-Technica ATH-M50X
+                                    Dynamic</p>
+                            </div>
+                            <div class="text-primary font-bold text-sm mt-2 flex items-center gap-1">
+                                View Build Details <span
+                                    class="material-symbols-outlined text-base">arrow_forward</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="block min-w-[340px] md:min-w-[500px] snap-center rounded-[1.9rem] bg-white dark:bg-[#181a1b] overflow-hidden shadow-[0_10px_30px_-2px_rgba(0,0,0,0.1)] hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.2)] transition-all border border-[#f0f0f0] dark:border-[#3a391a] transform hover:-translate-y-1"
+                        href="#" id="build-advanced">
+                        <div class="relative h-[320px] w-full bg-cover bg-center"
+                            data-alt="High performance advanced setup"
+                            style="background-image: url('https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                            <span
+                                class="absolute top-4 left-4 bg-primary text-text-main text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md z-10">Advanced</span>
+                        </div>
+                        <div class="p-8 flex flex-col gap-4">
+                            <div>
+                                <h3 class="text-3xl font-bold text-text-main dark:text-white">Solstice ITX Setup</h3>
+                                <p class="text-xl text-text-sub dark:text-gray-400 mt-2">RTX 4070, Ryzen 7 7800X3D,
+                                    240mm AIO, Rode PSA1 Mic, 27" 180hz OLED Monitor, Logitech G Mouse, Corsair K70
+                                    Keyboard
+                                    XLR Audio</p>
+                            </div>
+                            <div class="text-primary font-bold text-sm mt-2 flex items-center gap-1">
+                                View Build Details <span
+                                    class="material-symbols-outlined text-base">arrow_forward</span>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="block min-w-[340px] md:min-w-[500px] snap-center rounded-[1.9rem] bg-white dark:bg-[#181a1b] overflow-hidden shadow-[0_10px_30px_-2px_rgba(0,0,0,0.1)] hover:shadow-[0_25px_50px_-10px_rgba(0,0,0,0.2)] transition-all border border-[#f0f0f0] dark:border-[#3a391a] transform hover:-translate-y-1"
+                        href="#" id="build-server">
+                        <div class="relative h-[320px] w-full bg-cover bg-center" data-alt="Powerful home server rack"
+                            style="background-image: url('https://plus.unsplash.com/premium_photo-1682145767950-d3c0e9e1b091?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');">
+                            <span
+                                class="absolute top-4 left-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-md z-10">Ultra</span>
+                        </div>
+                        <div class="p-8 flex flex-col gap-4">
+                            <div>
+                                <h3 class="text-3xl font-bold text-text-main dark:text-white">The Monolith Server</h3>
+                                <p class="text-xl text-text-sub dark:text-gray-400 mt-2">RTX 6000 Ada Generation,
+                                    Threadripper Pro 7995WX, 512GB DDR5 ECC, ASUS Pro WS WRX90E-SAGE SE, 104TB Storage
+                                </p>
+                            </div>
+                            <div class="text-primary font-bold text-sm mt-2 flex items-center gap-1">
+                                View Build Details <span
+                                    class="material-symbols-outlined text-base">arrow_forward</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="flex justify-center gap-3 relative z-10 mt-[20px]">
+                    <a aria-label="View Standard Build"
+                        class="w-2 h-2 rounded-full bg-gray-300 hover:scale-110 transition-transform"
+                        href="#build-standard"></a>
+                    <a aria-label="View Advanced Build"
+                        class="w-2 h-2 rounded-full bg-gray-300 hover:scale-110 transition-transform"
+                        href="#build-advanced"></a>
+                    <a aria-label="View Custom Build"
+                        class="w-2 h-2 rounded-full bg-gray-300 hover:scale-110 transition-transform"
+                        href="#build-custom"></a>
+                    <a aria-label="View Streaming Build"
+                        class="w-2 h-2 rounded-full bg-gray-300 hover:scale-110 transition-transform"
+                        href="#build-streaming"></a>
+                    <a aria-label="View Server Build"
+                        class="w-2 h-2 rounded-full bg-gray-300 hover:scale-110 transition-transform"
+                        href="#build-server"></a>
+                </div>
+            </div>
+        </section>
+        <section class="py-32 w-full bg-text-main dark:bg-[#1a1a0c] overflow-hidden relative"
+            onmousemove="document.getElementById('dust-particles').style.setProperty('--cursor-x', event.clientX + 'px'); document.getElementById('dust-particles').style.setProperty('--cursor-y', event.clientY + 'px');">
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-red-500/10 via-green-500/10 to-blue-500/10 animate-gradient-bg pointer-events-none z-0">
+            </div>
+            <div class="absolute inset-0 pointer-events-none z-0 overflow-hidden" id="dust-particles"
+                style="--cursor-x: 50%; --cursor-y: 50%;">
+                <div class="absolute top-1/4 left-1/4 transition-transform duration-500 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 25vw) * -0.05), calc((var(--cursor-y) - 25vh) * -0.05));">
+                    <div class="w-2 h-2 bg-white/20 rounded-full blur-[1px] animate-float-1"></div>
+                </div>
+                <div class="absolute top-3/4 left-1/3 transition-transform duration-700 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 33vw) * -0.08), calc((var(--cursor-y) - 75vh) * -0.08));">
+                    <div class="w-1 h-1 bg-white/30 rounded-full blur-[0.5px] animate-float-2"></div>
+                </div>
+                <div class="absolute top-1/2 left-3/4 transition-transform duration-600 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 75vw) * -0.06), calc((var(--cursor-y) - 50vh) * -0.06));">
+                    <div class="w-3 h-3 bg-white/10 rounded-full blur-[2px] animate-float-3"></div>
+                </div>
+                <div class="absolute top-1/3 left-2/3 transition-transform duration-500 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 66vw) * -0.04), calc((var(--cursor-y) - 33vh) * -0.04));">
+                    <div class="w-1.5 h-1.5 bg-primary/20 rounded-full blur-[1px] animate-float-4"></div>
+                </div>
+                <div class="absolute top-2/3 left-1/5 transition-transform duration-800 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 20vw) * -0.07), calc((var(--cursor-y) - 66vh) * -0.07));">
+                    <div class="w-2 h-2 bg-white/15 rounded-full blur-[1px] animate-float-1"></div>
+                </div>
+                <div class="absolute top-1/5 left-1/2 transition-transform duration-400 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 50vw) * -0.03), calc((var(--cursor-y) - 20vh) * -0.03));">
+                    <div class="w-1 h-1 bg-white/25 rounded-full blur-[0.5px] animate-float-2"></div>
+                </div>
+                <div class="absolute top-[10%] left-[80%] transition-transform duration-600 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 80vw) * -0.04), calc((var(--cursor-y) - 10vh) * -0.04));">
+                    <div class="w-2 h-2 bg-white/10 rounded-full blur-[1px] animate-float-3"></div>
+                </div>
+                <div class="absolute top-[90%] left-[10%] transition-transform duration-700 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 10vw) * -0.09), calc((var(--cursor-y) - 90vh) * -0.09));">
+                    <div class="w-1.5 h-1.5 bg-primary/30 rounded-full blur-[0.5px] animate-float-4"></div>
+                </div>
+                <div class="absolute top-[45%] left-[10%] transition-transform duration-500 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 10vw) * -0.05), calc((var(--cursor-y) - 45vh) * -0.05));">
+                    <div class="w-1 h-1 bg-white/20 rounded-full blur-[0.5px] animate-float-2"></div>
+                </div>
+                <div class="absolute top-[85%] left-[60%] transition-transform duration-800 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 60vw) * -0.06), calc((var(--cursor-y) - 85vh) * -0.06));">
+                    <div class="w-2 h-2 bg-white/10 rounded-full blur-[1px] animate-float-1"></div>
+                </div>
+                <div class="absolute top-[15%] left-[40%] transition-transform duration-600 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 40vw) * -0.03), calc((var(--cursor-y) - 15vh) * -0.03));">
+                    <div class="w-1.5 h-1.5 bg-white/20 rounded-full blur-[0.5px] animate-float-3"></div>
+                </div>
+                <div class="absolute top-[60%] left-[90%] transition-transform duration-500 ease-out"
+                    style="transform: translate(calc((var(--cursor-x) - 90vw) * -0.04), calc((var(--cursor-y) - 60vh) * -0.04));">
+                    <div class="w-1 h-1 bg-primary/20 rounded-full blur-[0.5px] animate-float-2"></div>
+                </div>
+            </div>
+            <div class="max-w-[1440px] mx-auto px-4 relative z-10">
+                <div class="relative z-10 flex flex-col items-center gap-6 text-center">
+                    <div
+                        class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-3xl aspect-square bg-primary/10 blur-[120px] rounded-full -z-10">
+                    </div>
+                    <h2 class="text-3xl md:text-5xl font-black text-white leading-tight max-w-2xl">
+                        Ready to Build Your <br /><span class="text-primary">Dream Machine?</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg max-w-xl">
+                        Start our interactive configuration tool and customize every detail, from the chassis to the
+                        cooling loop.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 mt-4 w-full justify-center">
+                        <a href="NexusConfigurator.html"
+                            class="h-12 px-8 rounded-full bg-primary text-text-main text-base font-bold shadow-lg btn-rgb-hover transition-all duration-300 hover:scale-110 min-w-[200px] flex items-center justify-center">
+                            Start Configurator
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer class="bg-gray-100 dark:bg-[#1e2022] border-t border-[#e6e6db] dark:border-[#3a391a] py-12 px-4">
+            <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div class="col-span-1 md:col-span-1 flex flex-col gap-4">
+                    <div class="flex items-center gap-2 text-text-main dark:text-white">
+                        <span class="material-symbols-outlined text-2xl">memory</span>
+                        <h3 class="text-lg font-bold">NexusBuilds</h3>
+                    </div>
+                    <p class="text-sm text-text-sub dark:text-gray-400">
+                        Defining the future of personal computing with precision engineering and bespoke design.
+                    </p>
+                    <div class="flex gap-4 mt-2">
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">call</span></a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#"><span
+                                class="material-symbols-outlined">mail</span></a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z">
+                                </path>
+                            </svg>
+                        </a>
+                        <a class="text-text-sub dark:text-gray-400 hover:text-primary transition-colors" href="#">
+                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z">
+                                </path>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="font-bold text-text-main dark:text-white mb-4">Services</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-text-sub dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="#">Standard Builds</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Advanced Builds</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Ultra Builds</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Repairs &amp; Upgrades</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-text-main dark:text-white mb-4">Company</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-text-sub dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="#">About Us</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Gallery</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Careers</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-text-main dark:text-white mb-4">Support</h4>
+                    <ul class="flex flex-col gap-2 text-sm text-text-sub dark:text-gray-400">
+                        <li><a class="hover:text-primary transition-colors" href="#">Help Center</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Warranty Info</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Shipping</a></li>
+                        <li><a class="hover:text-primary transition-colors" href="#">Returns</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div
+                class="max-w-[1440px] mx-auto mt-12 pt-8 border-t border-[#e6e6db] dark:border-[#3a391a] text-center md:text-left flex flex-col md:flex-row justify-between text-xs text-text-sub dark:text-gray-500">
+                <p>© 2024 NexusBuilds Inc. All rights reserved.</p>
+                <div class="flex gap-6 justify-center md:justify-end mt-4 md:mt-0">
+                    <a class="hover:text-primary" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary" href="#">Terms of Service</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+
+</html>

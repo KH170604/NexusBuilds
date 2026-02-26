@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Expert Consultation Chat | NexusBuilds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fac638",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#1b1b13",
+                        "text-main": "#181811",
+                        "text-sub": "#8c8b5f",
+                        "chat-user-bg": "#EFEFEA",
+                        "chat-user-dark": "#2A2A22"
+                    },
+                    fontFamily: {
+                        display: "Spline Sans"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        "2xl": "1.25rem",
+                        full: "9999px"
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(5px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                    }
+                }
+            }
+        };
+    </script>
+    <style type="text/tailwindcss">
+        @keyframes float-1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -20px); } }
+        @keyframes float-2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-20px, 30px); } }
+        @keyframes float-3 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(25px, 25px); } }
+        @keyframes float-4 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-30px, -15px); } }
+        .animate-drift-1 { animation: float-1 18s ease-in-out infinite; }
+        .animate-drift-2 { animation: float-2 23s ease-in-out infinite; }
+        .animate-drift-3 { animation: float-3 20s ease-in-out infinite; }
+        .animate-drift-4 { animation: float-4 25s ease-in-out infinite; }
+        .dust-wrapper { position: absolute; display: flex; align-items: center; justify-content: center; pointer-events: auto; }
+        .dust-spec { background-color: currentColor; border-radius: 50%; opacity: 0.4; transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s; }
+        .dark .dust-spec { opacity: 0.2; }
+        .dust-wrapper:hover .dust-spec { transform: translate(var(--avoid-x, 40px), var(--avoid-y, -40px)) scale(0.5); opacity: 0.6; }
+        .highlight {
+            background-color: #fac638;
+            color: #181811;
+            padding: 0 2px;
+            border-radius: 2px;
+        }.star-rating-group {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 0.25rem;
+        }
+        .star-rating-group input {
+            display: none;
+        }
+        .star-label .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            transition: color 0.2s, font-variation-settings 0.2s;
+        }.star-rating-group:hover .star-label .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0;color: #d1d5db;}
+        .dark .star-rating-group:hover .star-label .material-symbols-outlined {
+            color: #4b5563;
+        }
+        .star-rating-group .star-label:hover .material-symbols-outlined,
+        .star-rating-group .star-label:hover ~ .star-label .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+            color: #fac638 !important;
+        }.star-rating-group input:checked ~ .star-label .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1;
+            color: #fac638;
+        }::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.1); border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.1); }
+        .font-variation-fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .font-variation-outline {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }.lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.9);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .lightbox-overlay:target {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased overflow-hidden h-screen w-full relative transition-colors duration-300 flex flex-col">
+    <div
+        class="absolute inset-0 w-full h-full overflow-hidden z-0 text-gray-400 dark:text-gray-600 pointer-events-none">
+        <div class="dust-wrapper top-[10%] left-[10%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 50px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[25%] left-[80%] animate-drift-2 w-16 h-16"
+            style="--avoid-x: -40px; --avoid-y: 40px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+        <div class="dust-wrapper top-[70%] left-[15%] animate-drift-3 w-10 h-10"
+            style="--avoid-x: 30px; --avoid-y: -50px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[45%] left-[45%] animate-drift-4 w-14 h-14"
+            style="--avoid-x: -60px; --avoid-y: -20px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[85%] left-[70%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 20px; --avoid-y: 60px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[15%] left-[50%] animate-drift-3 w-12 h-12"
+            style="--avoid-x: -30px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+    </div>
+    <header
+        class="relative z-30 w-full h-16 flex items-center justify-between px-6 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-white/5 shrink-0">
+        <div class="flex items-center gap-6">
+            <button
+                class="flex items-center gap-2 group cursor-pointer text-text-sub hover:text-text-main dark:hover:text-white transition-colors">
+                <span
+                    class="material-symbols-outlined text-xl group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                <span class="font-medium text-sm hidden md:block">Collapse Chat</span>
+            </button>
+        </div>
+        <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+            <span class="font-bold text-lg tracking-tight text-text-main dark:text-white">#NB-8421</span>
+        </div>
+        <div class="flex items-center gap-4">
+            <div
+                class="group flex items-center bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full px-3 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+                <span class="material-symbols-outlined text-text-sub text-lg">search</span>
+                <input
+                    class="bg-transparent border-none focus:ring-0 text-sm w-32 md:w-48 text-text-main dark:text-white placeholder-text-sub"
+                    placeholder="Find in chat..." type="text" value="" />
+                <span
+                    class="text-[10px] text-text-sub font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-white/10 rounded hidden group-focus-within:block">0/0</span>
+            </div>
+            <div
+                class="flex items-center gap-1 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full p-0.5 shadow-sm">
+                <a class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-main dark:text-white transition-colors cursor-pointer"
+                    href="#chat-start">
+                    <span class="material-symbols-outlined text-xl">keyboard_arrow_up</span>
+                </a>
+                <div class="w-px h-4 bg-gray-200 dark:bg-white/10"></div>
+                <a class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-main dark:text-white transition-colors cursor-pointer"
+                    href="#chat-end">
+                    <span class="material-symbols-outlined text-xl">keyboard_arrow_down</span>
+                </a>
+            </div>
+        </div>
+    </header>
+    <main class="relative z-10 flex-1 overflow-y-auto w-full px-4 py-8 md:px-0 scroll-smooth">
+        <div class="max-w-3xl mx-auto space-y-10 pb-4">
+            <div class="h-px w-full" id="chat-start"></div>
+            <div class="flex justify-center sticky top-0 z-10">
+                <span
+                    class="text-xs font-medium text-text-sub bg-gray-100/90 dark:bg-[#252520]/90 backdrop-blur px-3 py-1 rounded-full shadow-sm">Today,
+                    10:23 AM</span>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="flex gap-4">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-text-main text-xs font-bold shrink-0 shadow-sm border border-black/5">
+                        NB</div>
+                    <div class="flex flex-col gap-2 max-w-[85%] md:max-w-[75%]">
+                        <div
+                            class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl rounded-tl-none text-text-main dark:text-gray-200 shadow-sm">
+                            <p class="leading-relaxed">Hello! I've reviewed your request for a high-end workstation.
+                                Based on your 3D rendering needs, I've put together a list of components that fit your
+                                budget perfectly.</p>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-5 rounded-2xl rounded-tl-none text-text-main dark:text-gray-200 shadow-sm">
+                            <p class="mb-3 font-semibold text-sm uppercase tracking-wide text-text-sub">Recommended
+                                Specs</p>
+                            <ul class="list-none space-y-2 text-sm">
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                    <span>Intel Core i9-13900K (24 Cores)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                    <span>64GB DDR5 6000MHz RAM</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                    <span><span class="font-medium">RTX 3080</span> Ti 12GB (Best
+                                        value/performance)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="material-symbols-outlined text-primary text-base">check_circle</span>
+                                    <span>2TB NVMe Gen4 SSD (7000MB/s)</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[10px] text-text-sub ml-14">10:24 AM</span>
+            </div>
+            <div class="flex flex-col gap-1 items-end">
+                <div class="flex flex-row-reverse gap-4">
+                    <div class="flex flex-col gap-2 max-w-[85%] md:max-w-[75%] items-end">
+                        <div
+                            class="bg-chat-user-bg dark:bg-chat-user-dark border border-black/5 dark:border-white/5 p-4 rounded-2xl rounded-tr-none text-text-main dark:text-white shadow-sm">
+                            <p class="leading-relaxed">That looks solid. Could you send some photos of the <span
+                                    class="font-medium">3080</span> variant you have in stock? I want to check the
+                                cooler design matches my case airflow.</p>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[10px] text-text-sub mr-2">10:28 AM</span>
+            </div>
+            <div class="flex flex-col gap-1 items-end">
+                <div class="flex flex-row-reverse gap-4">
+                    <div class="flex flex-col gap-2 max-w-[85%] md:max-w-[75%] items-end">
+                        <div
+                            class="bg-chat-user-bg dark:bg-chat-user-dark border border-black/5 dark:border-white/5 p-4 rounded-2xl rounded-tr-none text-text-main dark:text-white shadow-sm">
+                            <p class="leading-relaxed">Here's my current case setup for context. It's an older ATX
+                                mid-tower, so clearance is my main worry.</p>
+                        </div>
+                        <div
+                            class="relative group overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 cursor-pointer w-full max-w-xs">
+                            <a href="#view-user-case">
+                                <img alt="User Case Setup"
+                                    class="w-full h-40 object-cover group-hover:scale-105 transition-transform duration-500"
+                                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBQSqwQun6K0tO6BsQ3zGKlDGIaOWTNs9G9DwZCQOTzlFDUTNyM_wI_lCN2uhy6GClgUCt75PzLw7VlFIhMkwS50FcA48HCN6w_ncCnH36h8QsNhuuSNVKj5VmmpdIYXS_elXJ3sy0ogQlt_Q-tirYWxTXbqGvJFTBdj5ID2iHtiTFa8Qccss5XI-KU70QI8wtsQCkOpueyVfIXE_ZDimfrQ1mM3mh5zsmUf8nSnz3XpAkQDt_41QSSP-u2fSb3gwQ16Ughmu7lkWA" />
+                                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors">
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[10px] text-text-sub mr-2">10:29 AM</span>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="flex gap-4">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-text-main text-xs font-bold shrink-0 shadow-sm border border-black/5">
+                        NB</div>
+                    <div class="flex flex-col gap-2 max-w-[85%] md:max-w-[75%]">
+                        <div
+                            class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl rounded-tl-none text-text-main dark:text-gray-200 shadow-sm">
+                            <p>Thanks for the photo! The clearance should be fine with the ASUS TUF Gaming 3080. It's
+                                299.9mm long. Here are the shots you asked for.</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div
+                                class="relative group overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 cursor-pointer">
+                                <a href="#view-gpu-front">
+                                    <img alt="GPU Front"
+                                        class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT2s53UbiZ7gRj-f8VRgsZJOZpasiJxOwONuTPUbzPEghBg_94d9XocUitamKkBdzXzOJ_0dMVt40SwzeVeUJwbBcCos6a__Jmn_h8fLLbIjKH-yKqalL3zTT-QeNZz8qmGS6gNYwbcPCCmB8d-7otIr97yYp8ICUH-CErdAjP-GA7RRLmioLRVQTbXQWA2B7JRTyqjAxqXywovR1EUcHMMvZ2ioYVqdQi3b80xF5YrevIFFxmJB3866zTFTh6xkEu2Hf_FXScAaC7" />
+                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors">
+                                    </div>
+                                </a>
+                            </div>
+                            <div
+                                class="relative group overflow-hidden rounded-xl border border-gray-200 dark:border-white/10 cursor-pointer">
+                                <a href="#view-gpu-side">
+                                    <img alt="GPU Side"
+                                        class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-500"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_-me1evmQaWV7akfWD5D0yprFvQo9MEenuAGCg0ZBt6yppA4Qba5s6vck_uZrUloGuD9cobpcIgIVTLUhcdxjDWFupV32Z6UaB7kCGN-BJNabyJpBm0zGeU-UtY-VKFsl40u6lt2iS2xKmf_w0BffHhCmskA2UZOSHxzA1yIhKfGsCkHL-G4GN0rGl8qYXp-GWZY-qF1zU8u9EUegH_POeS7d0gsWencuHOtWTAwIyiDZIHGn9eOjO6p9muwJNjXpZgnsHb32y3IZ" />
+                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div
+                            class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-3 rounded-xl rounded-tl-none flex items-center gap-3 w-full sm:w-fit hover:bg-gray-50 dark:hover:bg-white/10 transition-colors cursor-pointer group">
+                            <div
+                                class="w-10 h-10 rounded-lg bg-gray-100 dark:bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:dark:bg-white/20 transition-colors shadow-sm">
+                                <span class="material-symbols-outlined text-primary">link</span>
+                            </div>
+                            <div class="flex flex-col min-w-0">
+                                <span class="text-sm font-bold text-text-main dark:text-white truncate">Full Technical
+                                    Specifications</span>
+                                <span class="text-xs text-text-sub truncate">nexusbuilds.com/parts/gpu/3080-tuf</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[10px] text-text-sub ml-14">10:30 AM</span>
+            </div>
+            <div class="flex flex-col gap-1 items-end">
+                <div class="flex flex-row-reverse gap-4">
+                    <div class="flex flex-col gap-2 max-w-[85%] md:max-w-[75%] items-end">
+                        <div
+                            class="bg-chat-user-bg dark:bg-chat-user-dark border border-black/5 dark:border-white/5 p-4 rounded-2xl rounded-tr-none text-text-main dark:text-white shadow-sm">
+                            <p class="leading-relaxed">Looks great. One question - is the 850W PSU enough for this setup
+                                if I decide to overclock later?</p>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[10px] text-text-sub mr-2">10:35 AM</span>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="flex gap-4">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-text-main text-xs font-bold shrink-0 shadow-sm border border-black/5">
+                        NB</div>
+                    <div class="flex flex-col gap-2 max-w-[85%] md:max-w-[75%]">
+                        <div
+                            class="bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 p-4 rounded-2xl rounded-tl-none text-text-main dark:text-gray-200 shadow-sm">
+                            <p>Good catch. For moderate overclocking, 850W is sufficient, but to be completely safe and
+                                future-proof for ATX 3.0 standards, I’d recommend upgrading to the Corsair RM1000x
+                                Shift. It’s only a small price difference.</p>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[10px] text-text-sub ml-14">10:38 AM</span>
+            </div>
+            <div class="flex flex-col gap-1 items-end">
+                <div class="flex flex-row-reverse gap-4">
+                    <div class="flex flex-col gap-2 max-w-[85%] md:max-w-[75%] items-end">
+                        <div
+                            class="bg-chat-user-bg dark:bg-chat-user-dark border border-black/5 dark:border-white/5 p-4 rounded-2xl rounded-tr-none text-text-main dark:text-white shadow-sm">
+                            <p class="leading-relaxed">Let's do the 1000W then. I'm ready to proceed!</p>
+                        </div>
+                    </div>
+                </div>
+                <span class="text-[10px] text-text-sub mr-2">10:40 AM</span>
+            </div>
+            <div class="flex flex-col gap-1 w-full animate-drift-4"
+                style="animation-duration: 4s; animation-iteration-count: 1;">
+                <div class="flex gap-4">
+                    <div
+                        class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-text-main text-xs font-bold shrink-0 shadow-sm border border-black/5">
+                        NB</div>
+                    <div class="flex flex-col gap-2 w-full max-w-[85%] md:max-w-[60%]">
+                        <div
+                            class="bg-white dark:bg-white/5 border border-primary/40 dark:border-primary/20 p-6 rounded-2xl rounded-tl-none text-text-main dark:text-white shadow-lg relative overflow-hidden group">
+                            <div class="absolute -top-4 -right-4 p-4 opacity-5 dark:opacity-10 pointer-events-none">
+                                <span class="material-symbols-outlined text-8xl">stars</span>
+                            </div>
+                            <p class="font-bold text-lg mb-2 relative z-10">How was your consultation?</p>
+                            <p class="text-sm text-text-sub mb-4 relative z-10">Please rate your experience with our
+                                expert to help us improve.</p>
+                            <form class="relative z-10 group/rating">
+                                <div class="star-rating-group mb-4 self-start inline-flex">
+                                    <input class="peer/5" id="star5" name="rating" type="radio" value="5" />
+                                    <label
+                                        class="star-label cursor-pointer text-gray-300 dark:text-gray-600 hover:scale-110 transition-transform p-1"
+                                        for="star5">
+                                        <span class="material-symbols-outlined text-3xl">star</span>
+                                    </label>
+                                    <input class="peer/4" id="star4" name="rating" type="radio" value="4" />
+                                    <label
+                                        class="star-label cursor-pointer text-gray-300 dark:text-gray-600 hover:scale-110 transition-transform p-1"
+                                        for="star4">
+                                        <span class="material-symbols-outlined text-3xl">star</span>
+                                    </label>
+                                    <input class="peer/3" id="star3" name="rating" type="radio" value="3" />
+                                    <label
+                                        class="star-label cursor-pointer text-gray-300 dark:text-gray-600 hover:scale-110 transition-transform p-1"
+                                        for="star3">
+                                        <span class="material-symbols-outlined text-3xl">star</span>
+                                    </label>
+                                    <input class="peer/2" id="star2" name="rating" type="radio" value="2" />
+                                    <label
+                                        class="star-label cursor-pointer text-gray-300 dark:text-gray-600 hover:scale-110 transition-transform p-1"
+                                        for="star2">
+                                        <span class="material-symbols-outlined text-3xl">star</span>
+                                    </label>
+                                    <input class="peer/1" id="star1" name="rating" type="radio" value="1" />
+                                    <label
+                                        class="star-label cursor-pointer text-gray-300 dark:text-gray-600 hover:scale-110 transition-transform p-1"
+                                        for="star1">
+                                        <span class="material-symbols-outlined text-3xl">star</span>
+                                    </label>
+                                </div>
+                                <div class="hidden group-has-[:checked]/rating:flex flex-col gap-3 animate-fade-in">
+                                    <textarea
+                                        class="w-full bg-gray-50 dark:bg-black/20 border border-gray-200 dark:border-white/10 rounded-lg p-3 text-sm focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                                        placeholder="Tell us more about your experience..." rows="2"></textarea>
+                                    <button
+                                        class="self-end px-4 py-2 bg-primary text-text-main font-bold text-sm rounded-lg hover:brightness-110 hover:shadow-lg transition-all shadow-sm">Submit
+                                        Feedback</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-center mt-8 mb-4">
+                <span class="font-bold text-text-sub text-sm">Remember your ticket number for this chat and your
+                    warranty!</span>
+            </div>
+            <div class="h-px w-full" id="chat-end"></div>
+        </div>
+    </main>
+    <footer
+        class="relative z-30 w-full bg-background-light dark:bg-background-dark border-t border-gray-200 dark:border-white/10 p-4 md:p-6 shrink-0">
+        <div class="max-w-4xl mx-auto flex items-end gap-3">
+            <div class="relative upload-wrapper z-50">
+                <input class="peer hidden" id="upload-toggle" type="checkbox" />
+                <label class="fixed inset-0 w-full h-full bg-transparent hidden peer-checked:block cursor-default z-40"
+                    for="upload-toggle"></label>
+                <label
+                    class="relative z-50 block p-2 rounded-full text-text-sub hover:text-primary hover:bg-gray-100 dark:hover:bg-white/5 transition-colors cursor-pointer select-none"
+                    for="upload-toggle">
+                    <span class="material-symbols-outlined text-2xl align-middle">add_circle</span>
+                </label>
+                <div
+                    class="upload-menu absolute bottom-full left-0 mb-4 hidden peer-checked:flex flex-col gap-1 bg-white dark:bg-[#252520] p-1.5 rounded-xl border border-gray-200 dark:border-white/10 shadow-xl min-w-[150px] origin-bottom-left z-50 animate-fade-in">
+                    <button
+                        class="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg text-sm text-text-main dark:text-gray-200 transition-colors w-full text-left">
+                        <span class="material-symbols-outlined text-primary text-xl">photo_camera</span> Camera
+                    </button>
+                    <button
+                        class="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg text-sm text-text-main dark:text-gray-200 transition-colors w-full text-left">
+                        <span class="material-symbols-outlined text-blue-400 text-xl">image</span> Photos
+                    </button>
+                    <button
+                        class="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-white/5 rounded-lg text-sm text-text-main dark:text-gray-200 transition-colors w-full text-left">
+                        <span class="material-symbols-outlined text-purple-400 text-xl">folder</span> Files
+                    </button>
+                </div>
+            </div>
+            <div
+                class="flex-1 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-2xl p-3 shadow-sm focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all">
+                <textarea
+                    class="w-full bg-transparent border-none p-0 focus:ring-0 text-text-main dark:text-white resize-none max-h-32 placeholder:text-gray-400"
+                    placeholder="Type a message..." rows="1"></textarea>
+            </div>
+            <button
+                class="p-3 bg-primary text-text-main rounded-xl hover:brightness-110 hover:shadow-md transition-all shadow-sm pb-3 mb-0.5 group">
+                <span
+                    class="material-symbols-outlined group-hover:translate-x-0.5 transition-transform translate-y-[4px]">send</span>
+            </button>
+        </div>
+    </footer>
+    <div class="lightbox-overlay" id="view-gpu-front">
+        <a class="absolute inset-0 w-full h-full cursor-default" href="#"></a>
+        <div class="lightbox-content relative bg-white dark:bg-background-dark p-2">
+            <a class="absolute -top-10 right-0 text-white hover:text-primary transition-colors" href="#">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </a>
+            <img alt="GPU Front Expanded" class="max-h-[85vh] w-auto rounded"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT2s53UbiZ7gRj-f8VRgsZJOZpasiJxOwONuTPUbzPEghBg_94d9XocUitamKkBdzXzOJ_0dMVt40SwzeVeUJwbBcCos6a__Jmn_h8fLLbIjKH-yKqalL3zTT-QeNZz8qmGS6gNYwbcPCCmB8d-7otIr97yYp8ICUH-CErdAjP-GA7RRLmioLRVQTbXQWA2B7JRTyqjAxqXywovR1EUcHMMvZ2ioYVqdQi3b80xF5YrevIFFxmJB3866zTFTh6xkEu2Hf_FXScAaC7" />
+        </div>
+    </div>
+    <div class="lightbox-overlay" id="view-gpu-side">
+        <a class="absolute inset-0 w-full h-full cursor-default" href="#"></a>
+        <div class="lightbox-content relative bg-white dark:bg-background-dark p-2">
+            <a class="absolute -top-10 right-0 text-white hover:text-primary transition-colors" href="#">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </a>
+            <img alt="GPU Side Expanded" class="max-h-[85vh] w-auto rounded"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_-me1evmQaWV7akfWD5D0yprFvQo9MEenuAGCg0ZBt6yppA4Qba5s6vck_uZrUloGuD9cobpcIgIVTLUhcdxjDWFupV32Z6UaB7kCGN-BJNabyJpBm0zGeU-UtY-VKFsl40u6lt2iS2xKmf_w0BffHhCmskA2UZOSHxzA1yIhKfGsCkHL-G4GN0rGl8qYXp-GWZY-qF1zU8u9EUegH_POeS7d0gsWencuHOtWTAwIyiDZIHGn9eOjO6p9muwJNjXpZgnsHb32y3IZ" />
+        </div>
+    </div>
+    <div class="lightbox-overlay" id="view-user-case">
+        <a class="absolute inset-0 w-full h-full cursor-default" href="#"></a>
+        <div class="lightbox-content relative bg-white dark:bg-background-dark p-2">
+            <a class="absolute -top-10 right-0 text-white hover:text-primary transition-colors" href="#">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </a>
+            <img alt="User Case Expanded" class="max-h-[85vh] w-auto rounded"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxbI2btBaB9LHMW7mrmF7iJ_z5gQUrozAynW9LPV_jt4wJ7nwWzQ1FaN4S1irOPhGtznbMeQs_9G7KI9PR2nGCzaVindX60mKZ6Y759d5hYW6HG7aztpqJYNgjtzZBgJl0gtzp5g5E7MyuCy4LOreRRrxdxpOUE2PpK-sV663fhoFgriMlix1_9cjGqejnpLgi9d30d9LWVeG6qSjlYyHBv_mjSZuPijfOhSMtEJtkfHDNA0aDrSpIZxW_o34G8jVuaEDDWcURIhTC" />
+        </div>
+    </div>
+</body>
+
+</html>

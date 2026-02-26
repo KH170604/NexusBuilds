@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Preferred Specs | NexusBuilds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fac638",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#141414",
+                        "text-main": "#181811",
+                        "text-sub": "#8c8b5f"
+                    },
+                    fontFamily: {
+                        display: ["Spline Sans", "system-ui", "sans-serif"],
+                        sans: ["Spline Sans", "system-ui", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes float-1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(30px, -20px);
+            }
+        }
+
+        @keyframes float-2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-20px, 30px);
+            }
+        }
+
+        @keyframes float-3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(25px, 25px);
+            }
+        }
+
+        @keyframes float-4 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-30px, -15px);
+            }
+        }
+
+        .animate-drift-1 {
+            animation: float-1 18s ease-in-out infinite;
+        }
+
+        .animate-drift-2 {
+            animation: float-2 23s ease-in-out infinite;
+        }
+
+        .animate-drift-3 {
+            animation: float-3 20s ease-in-out infinite;
+        }
+
+        .animate-drift-4 {
+            animation: float-4 25s ease-in-out infinite;
+        }
+
+        .dust-wrapper {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+        }
+
+        .dust-spec {
+            background-color: currentColor;
+            border-radius: 50%;
+            opacity: 0.4;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+        }
+
+        .dust-wrapper:hover .dust-spec {
+            transform: translate(var(--avoid-x, 40px), var(--avoid-y, -40px)) scale(0.5);
+            opacity: 0.6;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(140, 139, 95, 0.3);
+            border-radius: 20px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        .material-symbols-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased min-h-screen w-full relative transition-colors duration-300 overflow-x-hidden">
+    <div class="fixed inset-0 w-full h-full overflow-hidden pointer-events-none z-0 text-gray-700 dark:text-gray-500">
+        <div class="dust-wrapper top-[10%] left-[10%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 50px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[25%] left-[80%] animate-drift-2 w-16 h-16"
+            style="--avoid-x: -40px; --avoid-y: 40px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+        <div class="dust-wrapper top-[70%] left-[15%] animate-drift-3 w-10 h-10"
+            style="--avoid-x: 30px; --avoid-y: -50px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[45%] left-[45%] animate-drift-4 w-14 h-14"
+            style="--avoid-x: -60px; --avoid-y: -20px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[85%] left-[70%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 20px; --avoid-y: 60px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[15%] left-[50%] animate-drift-3 w-12 h-12"
+            style="--avoid-x: -30px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[60%] left-[90%] animate-drift-2 w-16 h-16"
+            style="--avoid-x: -50px; --avoid-y: 20px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+        <div class="dust-wrapper top-[5%] left-[30%] animate-drift-4 w-10 h-10"
+            style="--avoid-x: 40px; --avoid-y: 40px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[35%] left-[5%] animate-drift-1 w-14 h-14"
+            style="--avoid-x: 50px; --avoid-y: 10px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[90%] left-[30%] animate-drift-2 w-12 h-12"
+            style="--avoid-x: -20px; --avoid-y: -50px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[55%] left-[65%] animate-drift-3 w-12 h-12"
+            style="--avoid-x: 35px; --avoid-y: -35px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[80%] left-[50%] animate-drift-4 w-16 h-16"
+            style="--avoid-x: -40px; --avoid-y: -40px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+    </div>
+    <header
+        class="fixed top-0 left-0 w-full p-6 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-sm transition-colors duration-300">
+        <div class="flex items-center justify-between max-w-[1600px] mx-auto">
+            <a href="index.html"
+                class="flex items-center gap-2 text-text-main dark:text-white hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-3xl">memory</span>
+                <h2 class="text-xl font-bold tracking-tight">NexusBuilds</h2>
+            </a>
+            <button aria-label="Toggle Theme"
+                class="p-2 rounded-full text-text-main dark:text-white hover:bg-gray-200 dark:hover:bg-white/10 transition-colors"
+                onclick="toggleTheme(this)">
+                <span class="material-symbols-outlined">light_mode</span>
+            </button>
+        </div>
+    </header>
+    <main class="relative z-10 w-full min-h-screen pt-32 pb-32 px-6 flex justify-center">
+        <div class="w-full max-w-4xl flex flex-col gap-8">
+            <div class="text-center space-y-4 mb-4 animate-fade-in">
+                <h1 class="text-3xl md:text-5xl font-black tracking-tight text-text-main dark:text-white">
+                    Tell us your preferred specs
+                </h1>
+                <p
+                    class="text-text-sub dark:text-gray-400 text-sm md:text-base max-w-3xl mx-auto leading-relaxed font-medium">
+                    List any components or peripherals you would like us to include within your build. This section is
+                    optional.
+                </p>
+            </div>
+            <div
+                class="sticky top-[80px] z-40 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-y border-gray-200 dark:border-gray-800 py-3 mb-4 transition-colors duration-300">
+                <nav class="flex items-center justify-center gap-6 md:gap-12 overflow-x-auto no-scrollbar px-4">
+                    <a class="section-nav-link whitespace-nowrap text-sm font-medium transition-colors cursor-pointer text-text-sub dark:text-gray-400 hover:text-primary"
+                        href="#components">
+                        Components
+                    </a>
+                    <div class="h-4 border-r border-dotted border-gray-300 dark:border-gray-700"></div>
+                    <a class="section-nav-link whitespace-nowrap text-sm font-medium transition-colors cursor-pointer text-text-sub dark:text-gray-400 hover:text-primary"
+                        href="#peripherals">
+                        Peripherals
+                    </a>
+                    <div class="h-4 border-r border-dotted border-gray-300 dark:border-gray-700"></div>
+                    <a class="section-nav-link whitespace-nowrap text-sm font-medium transition-colors cursor-pointer text-text-sub dark:text-gray-400 hover:text-primary"
+                        href="#extras">
+                        Extras
+                    </a>
+                    <div class="h-4 border-r border-dotted border-gray-300 dark:border-gray-700"></div>
+                    <a class="section-nav-link whitespace-nowrap text-sm font-medium transition-colors cursor-pointer text-text-sub dark:text-gray-400 hover:text-primary"
+                        href="#custom-requests">
+                        Custom Requests
+                    </a>
+                </nav>
+            </div>
+            <form class="flex flex-col gap-20">
+                <section class="scroll-mt-44" id="components">
+                    <div class="flex items-center gap-4 mb-8 pb-4 border-b border-gray-200 dark:border-gray-800">
+                        <span class="material-symbols-outlined text-3xl text-primary">developer_board</span>
+                        <h2 class="text-2xl font-bold text-text-main dark:text-white">PC Component Selection</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">CPU</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. Intel Core i9-13900K" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">GPU</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. NVIDIA RTX 4080" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Motherboard</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. ASUS ROG Maximus Z790" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">RAM</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. 32GB DDR5 6000MHz" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">SSD/HDD</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. Samsung 990 Pro 2TB" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">PSU</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. Corsair RM1000x" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">CPU
+                                Cooling</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. 360mm AIO" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0 leading-tight">Custom
+                                Liquid Cooling</label>
+                            <select
+                                class="w-full font-sans bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all text-sm appearance-none">
+                                <option disabled="" selected="" value="">Select an option</option>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Case</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. Lian Li O11 Dynamic Evo" type="text" />
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">OS</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                placeholder="e.g. Windows 11 Home" type="text" />
+                        </div>
+                    </div>
+                </section>
+                <section class="scroll-mt-44" id="peripherals">
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-end gap-2 sm:gap-4 mb-8 pb-4 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-3xl text-primary">keyboard</span>
+                            <h2 class="text-2xl font-bold text-text-main dark:text-white">Peripherals</h2>
+                        </div>
+                        <span class="text-sm font-semibold text-text-sub dark:text-gray-400 pb-1">Click the check icon
+                            for items you would like included but have no preference for</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Monitor</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder='e.g. 27" 1440p 144Hz' type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Mouse</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Logitech G Pro X Superlight" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Keyboard</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Keychron Q1 Pro" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Speakers</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Audioengine A2+" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Microphone</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Blue Yeti" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Camera</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Logitech Brio 4K" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Headset</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. SteelSeries Arctis Nova Pro" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Network
+                                adapters</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. TP-Link WiFi 6E Card" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="scroll-mt-44" id="extras">
+                    <div
+                        class="flex flex-col sm:flex-row sm:items-end gap-2 sm:gap-4 mb-8 pb-4 border-b border-gray-200 dark:border-gray-800">
+                        <div class="flex items-center gap-4">
+                            <span class="material-symbols-outlined text-3xl text-primary">extension</span>
+                            <h2 class="text-2xl font-bold text-text-main dark:text-white">Extras</h2>
+                        </div>
+                        <span class="text-sm font-semibold text-text-sub dark:text-gray-400 pb-1">Click the check icon
+                            for items you would like included but have no preference for</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Case
+                                Fans</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Lian Li Uni Fan SL120" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">RGB
+                                lights/cables</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. LED Strips, Lian Li Strimer" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Case
+                                Screens</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder='e.g. 5" Sensor Panel' type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">GPU
+                                Brackets</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Vertical GPU Mount" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Optical
+                                Drives</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. External Blu-ray Drive" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">UPS
+                                Systems</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. CyberPower 1500VA" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Fan
+                                Controllers</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="e.g. Noctua NA-FC1" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 checkable-group">
+                            <label
+                                class="w-32 text-sm font-semibold text-text-sub dark:text-gray-400 shrink-0">Accessories</label>
+                            <div class="relative w-full">
+                                <input
+                                    class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg pl-4 pr-10 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                    placeholder="Any other specific requests" type="text" />
+                                <button
+                                    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors check-icon-btn"
+                                    type="button">
+                                    <span class="material-symbols-outlined select-none text-xl">check_circle</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="scroll-mt-44" id="custom-requests">
+                    <div class="flex items-center gap-4 mb-8 pb-4 border-b border-gray-200 dark:border-gray-800">
+                        <span class="material-symbols-outlined text-3xl text-primary">edit_note</span>
+                        <h2 class="text-2xl font-bold text-text-main dark:text-white">Custom Requests</h2>
+                    </div>
+                    <div class="grid grid-cols-1 gap-8">
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-semibold text-text-sub dark:text-gray-400">If you have any
+                                components or custom parts of yours that you would like us to incorporate, let us
+                                know</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                type="text" />
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label class="text-sm font-semibold text-text-sub dark:text-gray-400">If you have any custom
+                                parts you would like us to make or incorporate into your build, let us know</label>
+                            <input
+                                class="w-full bg-white dark:bg-white/5 border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2.5 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent transition-all placeholder-gray-400 dark:placeholder-gray-600 text-sm"
+                                type="text" />
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </main>
+    <div
+        class="fixed bottom-0 left-0 w-full bg-white/80 dark:bg-[#1b1b13]/80 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 z-50">
+        <div class="max-w-[1600px] mx-auto w-full px-6 py-4 flex justify-between items-center">
+            <button onclick="window.location.href='NexusConfigurator-3.html'"
+                class="px-6 py-2.5 rounded-lg border-2 border-gray-200 dark:border-gray-700 text-text-main dark:text-white font-semibold hover:border-primary dark:hover:border-primary hover:text-primary dark:hover:text-primary transition-colors">
+                Previous
+            </button>
+            <button onclick="window.location.href='NexusConfigurator-5a.html'"
+                class="px-8 py-2.5 rounded-lg bg-primary text-black font-bold hover:bg-yellow-400 transition-colors shadow-lg shadow-primary/20"
+                id="skip-btn">
+                Skip
+            </button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // ----------------------------
+            // 1) Header / section highlight
+            // ----------------------------
+            const links = document.querySelectorAll('.section-nav-link');
+            const sections = document.querySelectorAll('section[id]');
+
+            function setActiveLink(id) {
+                links.forEach(link => {
+                    const hrefId = link.getAttribute('href')?.slice(1);
+                    if (hrefId === id) {
+                        link.classList.add('text-primary', 'font-bold');
+                        link.classList.remove('text-text-sub', 'dark:text-gray-400');
+                    } else {
+                        link.classList.remove('text-primary', 'font-bold');
+                        link.classList.add('text-text-sub', 'dark:text-gray-400');
+                    }
+                });
+            }
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) setActiveLink(entry.target.id);
+                });
+            }, {
+                rootMargin: '-45% 0px -45% 0px',
+                threshold: 0.01
+            });
+
+            sections.forEach(section => observer.observe(section));
+            if (sections[0]) setActiveLink(sections[0].id);
+
+            // ----------------------------
+            // 2) Checkmark + auto-select + Skip/Next logic
+            // ----------------------------
+            const skipBtn = document.getElementById('skip-btn');
+
+            // Only apply to peripherals + extras (anything with .checkable-group)
+            const groups = document.querySelectorAll('.checkable-group');
+
+            function setChecked(group, checked) {
+                group.dataset.checked = checked ? 'true' : 'false';
+
+                const btn = group.querySelector('.check-icon-btn');
+                const icon = btn?.querySelector('.material-symbols-outlined');
+                const input = group.querySelector('input');
+
+                if (checked) {
+                    // Visual: check icon turns primary and filled
+                    btn?.classList.add('text-primary');
+                    btn?.classList.remove('text-gray-400');
+
+                    if (icon) {
+                        icon.classList.add('material-symbols-fill');
+                        // optional: swap icon name to the filled variant
+                        icon.textContent = 'check_circle';
+                    }
+
+                    // Optional: subtle highlight on the row
+                    group.classList.add('checked-row');
+                } else {
+                    btn?.classList.remove('text-primary');
+                    btn?.classList.add('text-gray-400');
+
+                    if (icon) {
+                        icon.classList.remove('material-symbols-fill');
+                        icon.textContent = 'check_circle';
+                    }
+
+                    group.classList.remove('checked-row');
+                }
+
+                updateSkipNext();
+            }
+
+            function isChecked(group) {
+                return group.dataset.checked === 'true';
+            }
+
+            function updateSkipNext() {
+                // If ANY checkable input has content OR any group is checked, show "Next"
+                const anyMeaningful = Array.from(groups).some(g => {
+                    const input = g.querySelector('input');
+                    const hasText = !!input && input.value.trim().length > 0;
+                    return hasText || isChecked(g);
+                });
+
+                if (skipBtn) skipBtn.textContent = anyMeaningful ? 'Next' : 'Skip';
+            }
+
+            // Click on check icon toggles selection
+            groups.forEach(group => {
+                const btn = group.querySelector('.check-icon-btn');
+                const input = group.querySelector('input');
+
+                // init state
+                group.dataset.checked = 'false';
+
+                btn?.addEventListener('click', () => {
+                    setChecked(group, !isChecked(group));
+                });
+
+                // Typing auto-checks; clearing input can auto-uncheck (optional)
+                input?.addEventListener('input', () => {
+                    const hasText = input.value.trim().length > 0;
+
+                    if (hasText) {
+                        // typing implies "this item is included" → check it
+                        if (!isChecked(group)) setChecked(group, true);
+                    } else {
+                        // if user clears it, you can either keep checked or uncheck
+                        setChecked(group, false);
+                    }
+
+                    updateSkipNext();
+                });
+            });
+
+            const style = document.createElement('style');
+            style.textContent = `
+      .checked-row input {
+        border-color: rgba(250, 198, 56, 0.7) !important;
+      }
+    `;
+            document.head.appendChild(style);
+
+            updateSkipNext();
+        });
+    </script>
+
+</body>
+
+</html>

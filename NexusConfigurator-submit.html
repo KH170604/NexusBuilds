@@ -1,0 +1,236 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Submission Success | NexusBuilds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fac638",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#1b1b13",
+                        "text-main": "#181811",
+                        "text-sub": "#8c8b5f"
+                    },
+                    fontFamily: {
+                        display: "Spline Sans"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes rgb-cycle {
+            0% {
+                box-shadow: 0 0 20px -5px #fac638;
+                border-color: #fac638;
+                color: #fac638;
+            }
+
+            25% {
+                box-shadow: 0 0 30px -5px #ff00ff;
+                border-color: #ff00ff;
+                color: #ff00ff;
+            }
+
+            50% {
+                box-shadow: 0 0 30px -5px #00ffff;
+                border-color: #00ffff;
+                color: #00ffff;
+            }
+
+            75% {
+                box-shadow: 0 0 30px -5px #00ff00;
+                border-color: #00ff00;
+                color: #00ff00;
+            }
+
+            100% {
+                box-shadow: 0 0 20px -5px #fac638;
+                border-color: #fac638;
+                color: #fac638;
+            }
+        }
+
+        @keyframes rotate-elastic {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            10% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(90deg);
+            }
+
+            35% {
+                transform: rotate(90deg);
+            }
+
+            50% {
+                transform: rotate(180deg);
+            }
+
+            60% {
+                transform: rotate(180deg);
+            }
+
+            75% {
+                transform: rotate(270deg);
+            }
+
+            85% {
+                transform: rotate(270deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .animate-rgb-cycle {
+            animation: rgb-cycle 3s linear infinite, rotate-elastic 4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite;
+        }
+
+        @keyframes check-pop {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            60% {
+                transform: scale(1.2);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .animate-check {
+            animation: check-pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes fade-out {
+            from {
+                opacity: 1;
+            }
+
+            to {
+                opacity: 0;
+            }
+        }
+
+        .animate-fade-out {
+            animation: fade-out 0.5s ease-out forwards;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fade-in 0.5s ease-out forwards;
+        }
+
+        .material-symbols-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased h-screen w-full relative transition-colors duration-300 overflow-hidden flex flex-col items-center justify-center">
+    <main class="relative z-10 w-full flex flex-col items-center justify-center p-6 text-center">
+        <div class="flex flex-col items-center gap-8 transition-opacity duration-500" id="loading-state">
+            <div class="relative w-32 h-32 flex items-center justify-center">
+                <div
+                    class="w-24 h-24 rounded-2xl border-8 bg-white/5 backdrop-blur-sm animate-rgb-cycle flex items-center justify-center relative z-10 transition-colors duration-300">
+                    <span class="material-symbols-outlined text-6xl">memory</span>
+                </div>
+                <div
+                    class="absolute inset-0 w-full h-full border border-gray-200 dark:border-gray-800 rounded-3xl scale-125 opacity-20">
+                </div>
+            </div>
+            <h2 class="text-xl md:text-2xl font-bold tracking-tight text-text-main dark:text-white animate-pulse">
+                Submitting your ticket...
+            </h2>
+        </div>
+        <div class="hidden flex-col items-center gap-6" id="success-state">
+            <div class="animate-check">
+                <span
+                    class="material-symbols-outlined text-8xl md:text-9xl text-primary material-symbols-fill drop-shadow-2xl shadow-primary/30">
+                    check_circle
+                </span>
+            </div>
+            <div class="space-y-3 animate-fade-in" style="animation-delay: 0.2s;">
+                <h1 class="text-3xl md:text-5xl font-black tracking-tight text-text-main dark:text-white">
+                    Thank you
+                </h1>
+                <p class="text-lg md:text-xl font-medium text-text-sub dark:text-gray-400">
+                    for choosing NexusBuilds
+                </p>
+            </div>
+            <p class="mt-8 text-sm text-text-sub dark:text-gray-600 animate-fade-in" style="animation-delay: 0.6s;">
+                Redirecting to homepage...
+            </p>
+        </div>
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingState = document.getElementById('loading-state');
+            const successState = document.getElementById('success-state');
+            // Step 1: Show success after 5 seconds (Updated from 3s)
+            setTimeout(() => {
+                loadingState.classList.add('animate-fade-out');
+                // Wait for fade out to almost finish before switching display
+                setTimeout(() => {
+                    loadingState.classList.add('hidden');
+                    loadingState.classList.remove('flex');
+                    successState.classList.remove('hidden');
+                    successState.classList.add('flex');
+                }, 450); // Slightly less than fade-out duration for smoother feel
+            }, 5000);
+            // Step 2: Redirect after another 3 seconds (8 seconds total)
+            setTimeout(() => {
+                // In a real scenario: window.location.href = '/';
+                // For this demo, we'll simulate it by fading the body
+                document.body.style.opacity = '0';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            }, 8000);
+        });
+    </script>
+</body>
+
+</html>

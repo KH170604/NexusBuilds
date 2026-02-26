@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>PC Usage Selection | NexusBuilds</title>
+    <link href="https://fonts.googleapis.com/css2?family=Spline+Sans:wght@300;400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#fac638",
+                        "background-light": "#f8f8f5",
+                        "background-dark": "#141414",
+                        "text-main": "#181811",
+                        "text-sub": "#8c8b5f"
+                    },
+                    fontFamily: {
+                        display: "Spline Sans"
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "1rem",
+                        xl: "1.5rem",
+                        full: "9999px"
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes float-1 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(30px, -20px);
+            }
+        }
+
+        @keyframes float-2 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-20px, 30px);
+            }
+        }
+
+        @keyframes float-3 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(25px, 25px);
+            }
+        }
+
+        @keyframes float-4 {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(-30px, -15px);
+            }
+        }
+
+        .animate-drift-1 {
+            animation: float-1 18s ease-in-out infinite;
+        }
+
+        .animate-drift-2 {
+            animation: float-2 23s ease-in-out infinite;
+        }
+
+        .animate-drift-3 {
+            animation: float-3 20s ease-in-out infinite;
+        }
+
+        .animate-drift-4 {
+            animation: float-4 25s ease-in-out infinite;
+        }
+
+        .dust-wrapper {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto;
+        }
+
+        .dust-spec {
+            background-color: currentColor;
+            border-radius: 50%;
+            opacity: 0.2;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s;
+        }
+
+        .dust-wrapper:hover .dust-spec {
+            transform: translate(var(--avoid-x, 40px), var(--avoid-y, -40px)) scale(0.5);
+            opacity: 0.5;
+        }
+
+        .usage-btn.selected {
+            border-color: #fac638;
+            background-color: rgba(250, 198, 56, 0.1);
+        }
+
+        .dark .usage-btn.selected {
+            background-color: rgba(250, 198, 56, 0.15);
+        }
+
+        .usage-btn.selected .material-symbols-outlined {
+            color: #fac638;
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+    <script src="theme.js"></script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-main antialiased overflow-x-hidden min-h-screen w-full relative transition-colors duration-300 selection:bg-primary/30">
+    <div class="fixed inset-0 w-full h-full overflow-hidden z-0 text-gray-400 dark:text-gray-500 pointer-events-none">
+        <div class="dust-wrapper top-[10%] left-[10%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 50px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[25%] left-[80%] animate-drift-2 w-16 h-16"
+            style="--avoid-x: -40px; --avoid-y: 40px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+        <div class="dust-wrapper top-[70%] left-[15%] animate-drift-3 w-10 h-10"
+            style="--avoid-x: 30px; --avoid-y: -50px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[45%] left-[45%] animate-drift-4 w-14 h-14"
+            style="--avoid-x: -60px; --avoid-y: -20px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[85%] left-[70%] animate-drift-1 w-12 h-12"
+            style="--avoid-x: 20px; --avoid-y: 60px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[15%] left-[50%] animate-drift-3 w-12 h-12"
+            style="--avoid-x: -30px; --avoid-y: -30px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[60%] left-[90%] animate-drift-2 w-16 h-16"
+            style="--avoid-x: -50px; --avoid-y: 20px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+        <div class="dust-wrapper top-[5%] left-[30%] animate-drift-4 w-10 h-10"
+            style="--avoid-x: 40px; --avoid-y: 40px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[35%] left-[5%] animate-drift-1 w-14 h-14"
+            style="--avoid-x: 50px; --avoid-y: 10px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[90%] left-[30%] animate-drift-2 w-12 h-12"
+            style="--avoid-x: -20px; --avoid-y: -50px;">
+            <div class="dust-spec w-1 h-1"></div>
+        </div>
+        <div class="dust-wrapper top-[55%] left-[65%] animate-drift-3 w-12 h-12"
+            style="--avoid-x: 35px; --avoid-y: -35px;">
+            <div class="dust-spec w-0.5 h-0.5"></div>
+        </div>
+        <div class="dust-wrapper top-[80%] left-[50%] animate-drift-4 w-16 h-16"
+            style="--avoid-x: -40px; --avoid-y: -40px;">
+            <div class="dust-spec w-1.5 h-1.5"></div>
+        </div>
+    </div>
+    <header class="absolute top-0 left-0 w-full p-6 z-50">
+        <div class="flex items-center justify-between">
+            <a href="index.html"
+                class="flex items-center gap-2 text-text-main dark:text-white hover:text-primary transition-colors">
+                <span class="material-symbols-outlined text-3xl">memory</span>
+                <h2 class="text-xl font-bold tracking-tight">NexusBuilds</h2>
+            </a>
+            <button aria-label="Toggle Theme"
+                class="p-2 rounded-full text-text-main dark:text-white hover:bg-gray-200 dark:hover:bg-white/10 transition-colors absolute top-6 right-6"
+                onclick="toggleTheme(this)">
+                <span class="material-symbols-outlined">light_mode</span>
+            </button>
+        </div>
+    </header>
+    <main class="relative z-10 flex flex-col items-center justify-center min-h-screen w-full px-4 py-24 text-center">
+        <div class="max-w-6xl w-full flex flex-col items-center gap-12">
+            <div class="space-y-4">
+                <h1 class="text-3xl md:text-5xl font-black tracking-tight text-text-main dark:text-white leading-tight">
+                    What will you be using your PC for?
+                </h1>
+                <p class="text-lg md:text-xl text-text-sub font-medium">Select all that apply</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">sports_esports</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">High performance gaming</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">gamepad</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Casual gaming</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">movie_edit</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Video editing</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">photo_camera</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Photo editing</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">view_in_ar</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">3D
+                        modelling and rendering</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">code</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">Programming
+                        and development</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">palette</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">Digital art
+                        and illustration</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">video_camera_front</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">Content
+                        creation and streaming</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">engineering</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Engineering workloads</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">desk</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white text-center leading-tight">Office
+                        work</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">music_note</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Music production</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">work_history</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Remote work</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">analytics</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Data analysis</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">security</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">IT and cybersecurity</span>
+                </button>
+                <button
+                    class="usage-btn group flex flex-col items-center justify-center gap-3 p-4 h-32 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                    onclick="this.classList.toggle('selected'); updateNextButton()">
+                    <span
+                        class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">account_balance_wallet</span>
+                    <span class="text-sm font-bold text-text-main dark:text-white">Personal finance</span>
+                </button>
+                <div class="flex flex-col gap-2 relative">
+                    <button
+                        class="usage-btn w-full h-32 group flex flex-col items-center justify-center gap-3 p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300"
+                        id="other-btn"
+                        onclick="const input = document.getElementById('other-input'); this.classList.toggle('selected'); if(this.classList.contains('selected')) { input.classList.remove('hidden'); input.focus(); } else { input.classList.add('hidden'); } updateNextButton()">
+                        <span
+                            class="material-symbols-outlined text-3xl text-text-sub group-hover:text-primary transition-colors duration-300">more_horiz</span>
+                        <span class="text-sm font-bold text-text-main dark:text-white">Other (please specify)</span>
+                    </button>
+                    <input
+                        class="hidden w-full p-3 rounded-xl border-2 border-gray-200 dark:border-gray-800 bg-white/80 dark:bg-black/40 text-text-main dark:text-white focus:border-primary focus:outline-none placeholder-text-sub text-sm transition-all"
+                        id="other-input" oninput="updateNextButton()" placeholder="Tell us more..." type="text" />
+                </div>
+            </div>
+            <div class="w-full flex justify-between items-center pt-8">
+                <button onclick="window.location.href='NexusConfigurator.html'"
+                    class="group px-6 py-3 rounded-2xl border-2 border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-black/20 text-text-main dark:text-white font-bold text-lg hover:border-primary dark:hover:border-primary hover:bg-white dark:hover:bg-black/40 transition-all duration-300 flex items-center gap-2">
+                    <span
+                        class="material-symbols-outlined group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                    Previous
+                </button>
+                <button onclick="navigateToNext()"
+                    class="group px-6 py-3 rounded-2xl bg-primary text-text-main font-bold text-lg shadow-lg shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none hover:enabled:scale-105 active:enabled:scale-95 transition-all duration-300 flex items-center gap-2"
+                    disabled="" id="next-btn">
+                    Next
+                    <span
+                        class="material-symbols-outlined group-hover:enabled:translate-x-1 transition-transform">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </main>
+    <script>
+        function navigateToNext() {
+            const userExp = localStorage.getItem('userExp');
+            if (userExp === 'familiar') {
+                window.location.href = 'NexusConfigurator-3.html';
+            } else {
+                window.location.href = 'NexusConfigurator-3b.html';
+            }
+        }
+
+        function updateNextButton() {
+            const selected = document.querySelectorAll('.usage-btn.selected');
+            const otherBtn = document.getElementById('other-btn');
+            const otherInput = document.getElementById('other-input');
+            const nextBtn = document.getElementById('next-btn');
+            let hasSelection = selected.length > 0;
+            let otherIsSelected = otherBtn.classList.contains('selected');
+            let otherHasText = otherInput.value.trim().length > 0;
+            let valid = false;
+            if (hasSelection) {
+                if (otherIsSelected) {
+                    valid = otherHasText;
+                } else {
+                    valid = true;
+                }
+            }
+            nextBtn.disabled = !valid;
+        }
+    </script>
+</body>
+
+</html>
