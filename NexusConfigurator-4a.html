@@ -713,15 +713,24 @@
             }
 
             function updateSkipNext() {
-                // If ANY checkable input has content OR any group is checked, show "Next"
-                const anyMeaningful = Array.from(groups).some(g => {
-                    const input = g.querySelector('input');
-                    const hasText = !!input && input.value.trim().length > 0;
-                    return hasText || isChecked(g);
+                const allInputs = document.querySelectorAll('input, select');
+                const anyInputFilled = Array.from(allInputs).some(input => {
+                    if (input.type === 'checkbox') return input.checked;
+                    if (input.tagName === 'SELECT') return input.value !== "";
+                    return input.value.trim().length > 0;
                 });
 
-                if (skipBtn) skipBtn.textContent = anyMeaningful ? 'Next' : 'Skip';
+                const anyGroupChecked = Array.from(groups).some(g => isChecked(g));
+
+                const shouldShowNext = anyInputFilled || anyGroupChecked;
+                if (skipBtn) skipBtn.textContent = shouldShowNext ? 'Next' : 'Skip';
             }
+
+            // Universal listeners for all inputs and selects
+            document.querySelectorAll('input, select').forEach(item => {
+                item.addEventListener('input', updateSkipNext);
+                item.addEventListener('change', updateSkipNext);
+            });
 
             // Click on check icon toggles selection
             groups.forEach(group => {
