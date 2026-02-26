@@ -19,7 +19,7 @@
                     colors: {
                         primary: "#fac638",
                         "background-light": "#f8f8f5",
-                        "background-dark": "#1b1b13",
+                        "background-dark": "#141414",
                         "text-main": "#181811",
                         "text-sub": "#8c8b5f",
                         "chat-user-bg": "#EFEFEA",
@@ -114,6 +114,13 @@
             align-items: center;
             justify-content: center;
         }
+        @keyframes slideDownOut {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(100%); opacity: 0; }
+        }
+        .animate-slide-out {
+            animation: slideDownOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards !important;
+        }
         .lightbox-content {
             max-width: 90%;
             max-height: 90vh;
@@ -156,7 +163,7 @@
     <header
         class="relative z-30 w-full h-16 flex items-center justify-between px-6 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-gray-200 dark:border-white/5 shrink-0">
         <div class="flex items-center gap-6">
-            <button
+            <button onclick="collapseChat()"
                 class="flex items-center gap-2 group cursor-pointer text-text-sub hover:text-text-main dark:hover:text-white transition-colors">
                 <span
                     class="material-symbols-outlined text-xl group-hover:-translate-x-1 transition-transform">arrow_back</span>
@@ -170,23 +177,24 @@
             <div
                 class="group flex items-center bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full px-3 py-1.5 shadow-sm focus-within:ring-2 focus-within:ring-primary/20 transition-all">
                 <span class="material-symbols-outlined text-text-sub text-lg">search</span>
-                <input
-                    class="bg-transparent border-none focus:ring-0 text-sm w-32 md:w-48 text-text-main dark:text-white placeholder-text-sub"
+                <input id="chat-search"
+                    class="bg-transparent border-none focus:ring-0 text-sm w-32 md:w-48 text-text-main dark:text-white placeholder-text-sub outline-none"
                     placeholder="Find in chat..." type="text" value="" />
-                <span
+                <span id="search-count"
                     class="text-[10px] text-text-sub font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-white/10 rounded hidden group-focus-within:block">0/0</span>
             </div>
             <div
                 class="flex items-center gap-1 bg-white dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-full p-0.5 shadow-sm">
-                <a class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-main dark:text-white transition-colors cursor-pointer"
-                    href="#chat-start">
+                <button onclick="document.querySelector('main').scrollTo({top: 0, behavior: 'smooth'})"
+                    class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-main dark:text-white transition-colors cursor-pointer outline-none">
                     <span class="material-symbols-outlined text-xl">keyboard_arrow_up</span>
-                </a>
+                </button>
                 <div class="w-px h-4 bg-gray-200 dark:bg-white/10"></div>
-                <a class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-main dark:text-white transition-colors cursor-pointer"
-                    href="#chat-end">
+                <button
+                    onclick="document.querySelector('main').scrollTo({top: document.querySelector('main').scrollHeight, behavior: 'smooth'})"
+                    class="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 text-text-main dark:text-white transition-colors cursor-pointer outline-none">
                     <span class="material-symbols-outlined text-xl">keyboard_arrow_down</span>
-                </a>
+                </button>
             </div>
         </div>
     </header>
@@ -500,6 +508,111 @@
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxbI2btBaB9LHMW7mrmF7iJ_z5gQUrozAynW9LPV_jt4wJ7nwWzQ1FaN4S1irOPhGtznbMeQs_9G7KI9PR2nGCzaVindX60mKZ6Y759d5hYW6HG7aztpqJYNgjtzZBgJl0gtzp5g5E7MyuCy4LOreRRrxdxpOUE2PpK-sV663fhoFgriMlix1_9cjGqejnpLgi9d30d9LWVeG6qSjlYyHBv_mjSZuPijfOhSMtEJtkfHDNA0aDrSpIZxW_o34G8jVuaEDDWcURIhTC" />
         </div>
     </div>
+    <script>
+        function collapseChat() {
+            document.body.classList.add('animate-slide-out');
+            localStorage.setItem('chat_collapsed', 'true');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 400);
+        }
+
+        // Search Logic
+        const searchInput = document.getElementById('chat-search');
+        const searchCount = document.getElementById('search-count');
+
+        let matches = [];
+        let currentMatchIdx = -1;
+
+        function performSearch() {
+            // clear old highlights
+            document.querySelectorAll('mark.search-highlight').forEach(el => {
+                const parent = el.parentNode;
+                parent.replaceChild(document.createTextNode(el.textContent), el);
+                parent.normalize();
+            });
+            matches = [];
+            currentMatchIdx = -1;
+
+            const term = searchInput.value.trim().toLowerCase();
+            if (!term) {
+                searchCount.textContent = '0/0';
+                return;
+            }
+
+            const mainContent = document.querySelector('main');
+            const treeWalker = document.createTreeWalker(mainContent, NodeFilter.SHOW_TEXT);
+            const nodes = [];
+            while (treeWalker.nextNode()) nodes.push(treeWalker.currentNode);
+
+            nodes.forEach(node => {
+                const text = node.nodeValue.toLowerCase();
+                let idx = text.indexOf(term);
+                if (idx !== -1) {
+                    const parent = node.parentNode;
+                    // Don't highlight inside script, style, mark, or non-visible elements
+                    if (parent.tagName === 'SCRIPT' || parent.tagName === 'STYLE' || parent.tagName === 'MARK' || parent.closest('.hidden')) return;
+
+                    const frag = document.createDocumentFragment();
+                    let lastIdx = 0;
+                    const originalText = node.nodeValue;
+
+                    while (idx !== -1) {
+                        if (idx > lastIdx) frag.appendChild(document.createTextNode(originalText.slice(lastIdx, idx)));
+
+                        const mark = document.createElement('mark');
+                        mark.className = 'search-highlight bg-primary text-black px-0.5 rounded';
+                        mark.textContent = originalText.slice(idx, idx + term.length);
+                        frag.appendChild(mark);
+                        matches.push(mark);
+
+                        lastIdx = idx + term.length;
+                        idx = text.indexOf(term, lastIdx);
+                    }
+                    if (lastIdx < originalText.length) frag.appendChild(document.createTextNode(originalText.slice(lastIdx)));
+
+                    parent.replaceChild(frag, node);
+                }
+            });
+
+            if (matches.length > 0) {
+                currentMatchIdx = 0;
+                updateSearchFocus();
+            } else {
+                searchCount.textContent = '0/0';
+            }
+        }
+
+        function updateSearchFocus() {
+            if (matches.length === 0) return;
+            matches.forEach(m => m.classList.remove('ring-2', 'ring-black', 'dark:ring-white'));
+            const current = matches[currentMatchIdx];
+            current.classList.add('ring-2', 'ring-black', 'dark:ring-white');
+            current.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            searchCount.textContent = `${currentMatchIdx + 1}/${matches.length}`;
+        }
+
+        searchInput.addEventListener('input', performSearch);
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                if (matches.length === 0) return;
+                if (e.shiftKey) {
+                    currentMatchIdx = (currentMatchIdx - 1 + matches.length) % matches.length;
+                } else {
+                    currentMatchIdx = (currentMatchIdx + 1) % matches.length;
+                }
+                updateSearchFocus();
+            }
+        });
+
+        // Ctrl+F shortcut
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    </script>
 </body>
 
 </html>
